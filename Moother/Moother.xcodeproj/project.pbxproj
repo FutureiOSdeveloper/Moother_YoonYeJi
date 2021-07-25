@@ -15,6 +15,7 @@
 		AA9C0CB826ADA37500200B6C /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0CB726ADA37500200B6C /* Image.swift */; };
 		AA9C0CBC26ADA38200200B6C /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0CBB26ADA38200200B6C /* URL.swift */; };
 		AA9C0CBF26ADA39600200B6C /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0CBE26ADA39600200B6C /* Const.swift */; };
+		AA9C0CCA26ADB2E000200B6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0CC926ADB2E000200B6C /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		AA9C0CB726ADA37500200B6C /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		AA9C0CBB26ADA38200200B6C /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		AA9C0CBE26ADA39600200B6C /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		AA9C0CC926ADB2E000200B6C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 				AA9C0CB726ADA37500200B6C /* Image.swift */,
 				AA9C0CBB26ADA38200200B6C /* URL.swift */,
 				AA9C0CBE26ADA39600200B6C /* Const.swift */,
+				AA9C0CC926ADB2E000200B6C /* ViewController.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 				AA9C0CA126AC6C0500200B6C /* ViewController.swift in Sources */,
 				AA9C0CB826ADA37500200B6C /* Image.swift in Sources */,
 				AA9C0C9D26AC6C0500200B6C /* AppDelegate.swift in Sources */,
+				AA9C0CCA26ADB2E000200B6C /* ViewController.swift in Sources */,
 				AA9C0C9F26AC6C0500200B6C /* SceneDelegate.swift in Sources */,
 				AA9C0CBF26ADA39600200B6C /* Const.swift in Sources */,
 			);
