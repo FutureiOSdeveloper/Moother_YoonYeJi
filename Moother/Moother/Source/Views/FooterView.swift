@@ -47,10 +47,10 @@ class FooterView: UIView {
             $0.height.equalTo(1)
         }
         
-        separatorBottomLabel.snp.makeConstraints {
-            $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(1)
-        }
+//        separatorBottomLabel.snp.makeConstraints {
+//            $0.bottom.leading.trailing.equalToSuperview()
+//            $0.height.equalTo(1)
+//        }
     }
     
     func setFooterLabel(text: String) {

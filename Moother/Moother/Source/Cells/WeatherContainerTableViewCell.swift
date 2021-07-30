@@ -58,21 +58,6 @@ extension WeatherContainerTableViewCell: UITableViewDelegate {
         return view
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        switch section {
-        case 0:
-            let footerView = FooterView()
-            footerView.setFooterLabel(text: "오늘: 날씨 한때 흐림, 체감 더위는 39도입니다. 최고 기온은 35도입니다.")
-            return footerView
-        case 1:
-            let footerView = FooterView()
-            footerView.setFooterLabel(text: "대한민국 서울특별시 중구 태평로1가 날씨.")
-            return footerView
-        default:
-            return UIView()
-        }
-    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 1
     }

@@ -23,6 +23,11 @@ class WeatherViewController: UIViewController {
         $0.font = UIFont.systemFont(ofSize: 40)
         $0.textColor = .white
     }
+    private let statusLabel = UILabel().then {
+        $0.text = "매우 맑음"
+        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.textColor = .white
+    }
     private let temperatureLabel = UILabel().then {
         $0.text = "27"
         $0.font = UIFont.systemFont(ofSize: 80)
@@ -46,18 +51,23 @@ class WeatherViewController: UIViewController {
     // MARK: - Function
     
     private func setUI() {
-        view.addSubviews(backgroundImageView, weatherTableView, cityLabel, temperatureLabel)
+        view.addSubviews(backgroundImageView, weatherTableView, cityLabel, temperatureLabel, statusLabel)
         
         cityLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(200)
+            $0.top.equalToSuperview().offset(160)
             $0.centerX.equalToSuperview()
         }
 
-        temperatureLabel.snp.makeConstraints {
-            $0.top.equalTo(cityLabel.snp.bottom).offset(10)
+        statusLabel.snp.makeConstraints {
+            $0.top.equalTo(cityLabel.snp.bottom).offset(5)
             $0.centerX.equalToSuperview()
         }
         
+        temperatureLabel.snp.makeConstraints {
+            $0.top.equalTo(statusLabel.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
+        }
+
         weatherTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
@@ -94,7 +104,7 @@ extension WeatherViewController: UITableViewDelegate {
         /// 라벨 top Constraint, alpha값 조절
         if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < 287 {
             cityLabel.snp.updateConstraints {
-                $0.top.equalToSuperview().offset(max(percent, 80))
+                $0.top.equalToSuperview().offset(max(percent, 60))
             }
             temperatureLabel.alpha = percent / 100
         } else if scrollView.contentOffset.y <= 0 {
