@@ -28,22 +28,27 @@ class WeatherViewController: UIViewController {
     }
     private let cityLabel = UILabel().then {
         $0.text = "광명시"
-        $0.font = UIFont.systemFont(ofSize: 40)
+        $0.font = UIFont.systemFont(ofSize: 32, weight: .light)
         $0.textColor = .white
     }
     private let statusLabel = UILabel().then {
         $0.text = "매우 맑음"
-        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .white
     }
     private let temperatureLabel = UILabel().then {
         $0.text = "27°"
-        $0.font = UIFont.systemFont(ofSize: 80)
+        $0.font = UIFont.systemFont(ofSize: 80, weight: .thin)
         $0.textColor = .white
     }
     private let backgroundImageView = UIImageView().then {
         $0.image = Const.Image.backgroundImage
         $0.alpha = 0.3
+    }
+    private let minAndMaxTemperatureLabel = UILabel().then {
+        $0.text = "최고:22° 최저:12°"
+        $0.font = UIFont.systemFont(ofSize: 16)
+        $0.textColor = .white
     }
     
     // MARK: - View Life Cycle
@@ -60,7 +65,7 @@ class WeatherViewController: UIViewController {
     // MARK: - Function
     
     private func setUI() {
-        view.addSubviews(backgroundImageView, weatherTableView, cityLabel, temperatureLabel, statusLabel)
+        view.addSubviews(backgroundImageView, weatherTableView, cityLabel, temperatureLabel, statusLabel, minAndMaxTemperatureLabel)
         
         cityLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(160)
@@ -74,6 +79,11 @@ class WeatherViewController: UIViewController {
         
         temperatureLabel.snp.makeConstraints {
             $0.top.equalTo(statusLabel.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview().offset(10)
+        }
+        
+        minAndMaxTemperatureLabel.snp.makeConstraints {
+            $0.top.equalTo(temperatureLabel.snp.bottom).offset(5)
             $0.centerX.equalToSuperview()
         }
         
@@ -111,12 +121,14 @@ extension WeatherViewController: UITableViewDelegate {
             cityLabel.snp.updateConstraints {
                 $0.top.equalToSuperview().offset(max(offset, Size.minimumOffset))
             }
-            temperatureLabel.alpha = percent
+            minAndMaxTemperatureLabel.alpha = percent
+            temperatureLabel.alpha = percent + 0.2
         } else if scrollView.contentOffset.y <= 0 {
             cityLabel.snp.updateConstraints {
                 $0.top.equalToSuperview().offset(min(offset, Size.maximumOffset))
             }
-            temperatureLabel.alpha = percent
+            minAndMaxTemperatureLabel.alpha = percent
+            temperatureLabel.alpha = percent + 0.2
         }
         
         /// cell mask
