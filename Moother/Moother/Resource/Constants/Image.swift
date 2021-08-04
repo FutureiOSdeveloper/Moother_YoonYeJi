@@ -11,5 +11,6 @@ extension Const {
     struct Image {
         static let backgroundImage = UIImage(named: "background")
         static let weatherIcon = UIImage(named: "11n")
+        static let weatherChannelImage = UIImage(named: "weatherChannel")
     }
 }
