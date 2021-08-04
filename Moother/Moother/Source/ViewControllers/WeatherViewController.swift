@@ -10,6 +10,14 @@ import UIKit
 import SnapKit
 import Then
 
+enum Size {
+    static let headerHeight: CGFloat = 260
+    static let minimumOffset: CGFloat = 60
+    static let maximumOffset: CGFloat = 130
+    static let hoursSectionHeight: CGFloat = 240
+    static let separatorHeight: CGFloat = 0.5
+}
+
 class WeatherViewController: UIViewController {
     
     // MARK: - UI Properties
@@ -29,7 +37,7 @@ class WeatherViewController: UIViewController {
         $0.textColor = .white
     }
     private let temperatureLabel = UILabel().then {
-        $0.text = "27"
+        $0.text = "27°"
         $0.font = UIFont.systemFont(ofSize: 80)
         $0.textColor = .white
     }
@@ -77,7 +85,6 @@ class WeatherViewController: UIViewController {
         backgroundImageView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
-        
     }
     
     private func setDelegation() {
@@ -95,34 +102,31 @@ class WeatherViewController: UIViewController {
 
 extension WeatherViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let offset = (180 - scrollView.contentOffset.y)
-        let percent = offset / 100
+        let offset = Size.headerHeight / 2 - scrollView.contentOffset.y
+        let percent = offset / 50
         
         /// 라벨 top Constraint, alpha값 조절
-        if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < 287 {
+        if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < Size.headerHeight {
             cityLabel.snp.updateConstraints {
-                $0.top.equalToSuperview().offset(max(offset, 60))
+                $0.top.equalToSuperview().offset(max(offset, Size.minimumOffset))
             }
             temperatureLabel.alpha = percent
         } else if scrollView.contentOffset.y <= 0 {
             cityLabel.snp.updateConstraints {
-                $0.top.equalToSuperview().offset(min(offset, 180))
+                $0.top.equalToSuperview().offset(min(offset, Size.maximumOffset))
             }
             temperatureLabel.alpha = percent
         }
         
         /// cell mask
         for cell in self.weatherTableView.visibleCells {
-            let paddingToDisapear = CGFloat(240)
+            let paddingToDisapear = CGFloat(Size.hoursSectionHeight)
             let hiddenFrameHeight = scrollView.contentOffset.y + paddingToDisapear - cell.frame.origin.y
             if (hiddenFrameHeight >= 0 || hiddenFrameHeight <= cell.frame.size.height) {
-                print(hiddenFrameHeight)
                 if let customCell = cell as? DayTableViewCell {
                     customCell.maskCell(fromTop: hiddenFrameHeight)
                 }
             }
-            
         }
     }
     
@@ -133,11 +137,11 @@ extension WeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0:
-            return 360
+            return Size.headerHeight
         case 1:
-            return 240
+            return Size.hoursSectionHeight
         default:
-            return 0.5
+            return Size.separatorHeight
         }
     }
     
@@ -179,10 +183,6 @@ extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
-        case 0:
-            let view = UIView()
-            view.backgroundColor = .none
-            return view
         case 1:
             return HoursHeaderView()
         case 2:
@@ -198,17 +198,17 @@ extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        case 1:
+        case 1: /// 날짜별 날씨셀
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.dayTableViewCell, for: indexPath) as? DayTableViewCell else { return UITableViewCell() }
             cell.configureUI()
             cell.selectionStyle = .none
             return cell
-        case 2:
+        case 2: /// 오늘 날씨셀
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
             cell.configureUI()
             cell.selectionStyle = .none
             return cell
-        case 3:
+        case 3: /// 날씨 Detail Info 셀
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.weatherInfoTableViewCell, for: indexPath) as? WeatherInfoTableViewCell else { return UITableViewCell() }
             cell.configureUI()
             cell.selectionStyle = .none
