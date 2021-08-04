@@ -43,6 +43,7 @@ class WeatherViewController: UIViewController {
     }
     private let backgroundImageView = UIImageView().then {
         $0.image = Const.Image.backgroundImage
+        $0.alpha = 0.3
     }
     
     // MARK: - View Life Cycle
@@ -79,7 +80,7 @@ class WeatherViewController: UIViewController {
         weatherTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(-50)
+            $0.bottom.equalTo(-60)
         }
         
         backgroundImageView.snp.makeConstraints {
