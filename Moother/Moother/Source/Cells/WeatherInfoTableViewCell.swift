@@ -12,26 +12,8 @@ class WeatherInfoTableViewCell: UITableViewCell {
     private var separatorLabel = UIView().then {
         $0.backgroundColor = .white
     }
-    private var titleLabel = UILabel().then {
-        $0.text = "일출"
-        $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: 10)
-    }
-    private var infoLabel = UILabel().then {
-        $0.text = "오전 5:34"
-        $0.textColor = .white
-        $0.font = UIFont.systemFont(ofSize: 25)
-    }
-    private var titleLabel2 = UILabel().then {
-        $0.text = "일출"
-        $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: 10)
-    }
-    private var infoLabel2 = UILabel().then {
-        $0.text = "오전 5:34"
-        $0.textColor = .white
-        $0.font = UIFont.systemFont(ofSize: 25)
-    }
+    private var weatherDetailInfoView = WeatherDetailInfoView()
+    private var weatherDetailInfoView2 = WeatherDetailInfoView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,33 +26,26 @@ class WeatherInfoTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureUI() {
-        addSubviews(separatorLabel, titleLabel, infoLabel, titleLabel2, infoLabel2)
+    public func configureUI() {
+        addSubviews(separatorLabel, weatherDetailInfoView, weatherDetailInfoView2)
         
         separatorLabel.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.top.equalToSuperview()
+            $0.height.equalTo(0.5)
+            $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
         
-        titleLabel.snp.makeConstraints {
+        weatherDetailInfoView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(5)
             $0.leading.equalToSuperview().offset(20)
         }
-        infoLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(2)
-            $0.leading.equalTo(titleLabel.snp.leading)
-        }
         
-        titleLabel2.snp.makeConstraints {
+        weatherDetailInfoView2.snp.makeConstraints {
             $0.top.equalToSuperview().offset(5)
-            $0.trailing.equalToSuperview().offset(-170)
+            $0.leading.equalToSuperview().offset(UIScreen.main.bounds.width/2)
         }
-        infoLabel2.snp.makeConstraints {
-            $0.top.equalTo(titleLabel2.snp.bottom).offset(2)
-            $0.leading.equalTo(titleLabel2.snp.leading)
-        }
+       
     }
 
 }

@@ -14,15 +14,15 @@ class HoursCollectionViewCell: UICollectionViewCell {
     
     private var hourLabel = UILabel().then {
         $0.text = "오전 3시"
-        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .white
     }
     private var weatherImageView = UIImageView().then {
         $0.image = Const.Image.weatherIcon
     }
     private var temperatureLabel = UILabel().then {
-        $0.text = "26"
-        $0.font = UIFont.systemFont(ofSize: 10)
+        $0.text = "26°"
+        $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .white
     }
     
@@ -35,7 +35,7 @@ class HoursCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    public func configureUI() {
         contentView.addSubviews(hourLabel, weatherImageView, temperatureLabel)
         
         hourLabel.snp.makeConstraints {
@@ -49,7 +49,7 @@ class HoursCollectionViewCell: UICollectionViewCell {
         }
         
         temperatureLabel.snp.makeConstraints {
-            $0.top.equalTo(weatherImageView.snp.bottom).offset(12)
+            $0.top.equalTo(weatherImageView.snp.bottom).offset(0)
             $0.centerX.equalToSuperview()
         }
     }

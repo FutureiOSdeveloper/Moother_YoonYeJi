@@ -11,9 +11,9 @@ import SnapKit
 import Then
 
 class WeatherViewController: UIViewController {
-
+    
     // MARK: - UI Properties
-  
+    
     private let weatherTableView = UITableView().then {
         $0.backgroundColor = .clear
         $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -57,7 +57,7 @@ class WeatherViewController: UIViewController {
             $0.top.equalToSuperview().offset(160)
             $0.centerX.equalToSuperview()
         }
-
+        
         statusLabel.snp.makeConstraints {
             $0.top.equalTo(cityLabel.snp.bottom).offset(5)
             $0.centerX.equalToSuperview()
@@ -67,7 +67,7 @@ class WeatherViewController: UIViewController {
             $0.top.equalTo(statusLabel.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
         }
-
+        
         weatherTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
@@ -77,7 +77,7 @@ class WeatherViewController: UIViewController {
         backgroundImageView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
-
+        
     }
     
     private func setDelegation() {
@@ -86,8 +86,9 @@ class WeatherViewController: UIViewController {
     }
     
     private func registerCell() {
-        weatherTableView.register(HoursTableViewCell.self, forCellReuseIdentifier: Const.cell.hoursTableViewCell)
-        weatherTableView.register(WeatherContainerTableViewCell.self, forCellReuseIdentifier: Const.cell.weatherContainerTableViewCell)
+        weatherTableView.register(DayTableViewCell.self, forCellReuseIdentifier: Const.cell.dayTableViewCell)
+        weatherTableView.register(TodayWeatherTableViewCell.self, forCellReuseIdentifier: Const.cell.todayWeatherTableViewCell)
+        weatherTableView.register(WeatherInfoTableViewCell.self, forCellReuseIdentifier: Const.cell.weatherInfoTableViewCell)
     }
     
 }
@@ -95,30 +96,33 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        print(scrollView.contentOffset.y)
-        
-        guard let weatherContainerCell = weatherTableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? WeatherContainerTableViewCell else { return }
-        
-        let percent = (200 - scrollView.contentOffset.y)
+        let offset = (180 - scrollView.contentOffset.y)
+        let percent = offset / 100
         
         /// 라벨 top Constraint, alpha값 조절
         if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < 287 {
             cityLabel.snp.updateConstraints {
-                $0.top.equalToSuperview().offset(max(percent, 60))
+                $0.top.equalToSuperview().offset(max(offset, 60))
             }
-            temperatureLabel.alpha = percent / 100
+            temperatureLabel.alpha = percent
         } else if scrollView.contentOffset.y <= 0 {
             cityLabel.snp.updateConstraints {
-                $0.top.equalToSuperview().offset(min(percent, 200))
+                $0.top.equalToSuperview().offset(min(offset, 180))
             }
-            temperatureLabel.alpha = percent / 100
+            temperatureLabel.alpha = percent
         }
         
-        /// 메인 테이블 스크롤 offset에 따라 스크롤 분기
-        if scrollView.contentOffset.y >= 0 && scrollView.contentOffset.y < 303 {
-            weatherContainerCell.setTableViewEnableScroll(isScrollEnabled: false)
-        } else {
-            weatherContainerCell.setTableViewEnableScroll(isScrollEnabled: true)
+        /// cell mask
+        for cell in self.weatherTableView.visibleCells {
+            let paddingToDisapear = CGFloat(240)
+            let hiddenFrameHeight = scrollView.contentOffset.y + paddingToDisapear - cell.frame.origin.y
+            if (hiddenFrameHeight >= 0 || hiddenFrameHeight <= cell.frame.size.height) {
+                print(hiddenFrameHeight)
+                if let customCell = cell as? DayTableViewCell {
+                    customCell.maskCell(fromTop: hiddenFrameHeight)
+                }
+            }
+            
         }
     }
     
@@ -129,11 +133,11 @@ extension WeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0:
-            return 400
+            return 360
         case 1:
-            return 100
+            return 240
         default:
-            return 0
+            return 0.5
         }
     }
     
@@ -142,6 +146,12 @@ extension WeatherViewController: UITableViewDelegate {
         case 0:
             return 0
         case 1:
+            return 9
+        case 2:
+            return 1
+        case 3:
+            return 5
+        case 4:
             return 1
         default:
             return 0
@@ -151,18 +161,20 @@ extension WeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 1:
-            return 550
+            return 30
+        case 3:
+            return 60
         default:
-            return 50
+            return UITableView.automaticDimension
         }
     }
-    
+
 }
 
 extension WeatherViewController: UITableViewDataSource {
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 6
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -172,14 +184,13 @@ extension WeatherViewController: UITableViewDataSource {
             view.backgroundColor = .none
             return view
         case 1:
-            let headerView = UIView()
-            guard let headerCell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.hoursTableViewCell) as? HoursTableViewCell else { return UIView() }
-            headerCell.configureUI()
-            headerView.addSubview(headerCell)
-            headerCell.snp.makeConstraints {
-                $0.top.leading.trailing.bottom.equalToSuperview()
-            }
-            return headerView
+            return HoursHeaderView()
+        case 2:
+            return SeparatorLineView()
+        case 3:
+            return SeparatorLineView()
+        case 4:
+            return SeparatorLineView()
         default:
             return UIView()
         }
@@ -188,10 +199,25 @@ extension WeatherViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 1:
-            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.weatherContainerTableViewCell, for: indexPath) as? WeatherContainerTableViewCell else {
-                return UITableViewCell()
-            }
+            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.dayTableViewCell, for: indexPath) as? DayTableViewCell else { return UITableViewCell() }
+            cell.configureUI()
             cell.selectionStyle = .none
+            return cell
+        case 2:
+            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
+            cell.configureUI()
+            cell.selectionStyle = .none
+            return cell
+        case 3:
+            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.weatherInfoTableViewCell, for: indexPath) as? WeatherInfoTableViewCell else { return UITableViewCell() }
+            cell.configureUI()
+            cell.selectionStyle = .none
+            return cell
+        case 4:
+            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
+            cell.configureUI()
+            cell.selectionStyle = .none
+            cell.setLabel(text: "광명시 날씨.")
             return cell
         default:
             return UITableViewCell()
