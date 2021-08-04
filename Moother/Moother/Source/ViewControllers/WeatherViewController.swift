@@ -201,18 +201,22 @@ extension WeatherViewController: UITableViewDataSource {
         case 1:
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.dayTableViewCell, for: indexPath) as? DayTableViewCell else { return UITableViewCell() }
             cell.configureUI()
+            cell.selectionStyle = .none
             return cell
         case 2:
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
             cell.configureUI()
+            cell.selectionStyle = .none
             return cell
         case 3:
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.weatherInfoTableViewCell, for: indexPath) as? WeatherInfoTableViewCell else { return UITableViewCell() }
             cell.configureUI()
+            cell.selectionStyle = .none
             return cell
         case 4:
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
             cell.configureUI()
+            cell.selectionStyle = .none
             cell.setLabel(text: "광명시 날씨.")
             return cell
         default:
