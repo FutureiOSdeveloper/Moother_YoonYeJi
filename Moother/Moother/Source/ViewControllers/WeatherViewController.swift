@@ -145,7 +145,7 @@ extension WeatherViewController: UITableViewDelegate {
     
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if scrollView.contentOffset.y > 0 {
+        if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < Size.hoursSectionHeight {
             scrollView.setContentOffset(CGPoint(x: scrollView.bounds.width, y: Size.headerHeight), animated: true)
         }
     }
