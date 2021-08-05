@@ -8,12 +8,13 @@
 import Foundation
 
 extension Const {
-    struct cell {
+    struct Cell {
         static let hoursTableViewCell = "HoursTableViewCell"
         static let hoursCollectionViewCell = "HoursCollectionViewCell"
         static let dayTableViewCell = "DayTableViewCell"
         static let weatherInfoTableViewCell = "WeatherInfoTableViewCell"
         static let weatherContainerTableViewCell = "WeatherContainerTableViewCell"
         static let todayWeatherTableViewCell = "TodayWeatherTableViewCell"
+        static let weatherListTableViewCell = "WeatherListTableViewCell"
     }
 }

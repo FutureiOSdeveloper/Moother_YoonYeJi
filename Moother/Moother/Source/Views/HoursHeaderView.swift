@@ -57,7 +57,7 @@ class HoursHeaderView: UIView {
         
         HoursCollectionView.dataSource = self
         HoursCollectionView.delegate = self
-        HoursCollectionView.register(HoursCollectionViewCell.self, forCellWithReuseIdentifier: Const.cell.hoursCollectionViewCell)
+        HoursCollectionView.register(HoursCollectionViewCell.self, forCellWithReuseIdentifier: Const.Cell.hoursCollectionViewCell)
     }
     
 }
@@ -86,7 +86,7 @@ extension HoursHeaderView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = HoursCollectionView.dequeueReusableCell(withReuseIdentifier: Const.cell.hoursCollectionViewCell, for: indexPath) as? HoursCollectionViewCell else {
+        guard let cell = HoursCollectionView.dequeueReusableCell(withReuseIdentifier: Const.Cell.hoursCollectionViewCell, for: indexPath) as? HoursCollectionViewCell else {
             return UICollectionViewCell()
         }
         

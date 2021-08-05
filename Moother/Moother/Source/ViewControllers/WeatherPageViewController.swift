@@ -9,7 +9,8 @@ import UIKit
 
 class WeatherPageViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - UI Properties
+    
     private let pageViewController = UIPageViewController(transitionStyle: .scroll,
                                                           navigationOrientation: .horizontal)
     private let pageControl = UIPageControl().then {
@@ -31,6 +32,9 @@ class WeatherPageViewController: UIViewController {
     }
     private let separatorView = SeparatorLineView()
     
+    // MARK: - Properties
+    
+    private var locationCount = 5
     
     // MARK: - View Life Cycle
     
@@ -41,6 +45,7 @@ class WeatherPageViewController: UIViewController {
         setPageControl()
         setUI()
         setToolbarItem()
+        setButtonEvent()
     }
     
     // MARK: - Function
@@ -57,12 +62,12 @@ class WeatherPageViewController: UIViewController {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(60)
         }
-        
+
         weatherChannelButton.snp.makeConstraints {
             $0.height.equalTo(30)
             $0.width.equalTo(30)
         }
-        
+
         weatherListButton.snp.makeConstraints {
             $0.height.equalTo(30)
             $0.width.equalTo(30)
@@ -70,7 +75,6 @@ class WeatherPageViewController: UIViewController {
     }
     
     private func setToolbarItem() {
-        
         var items: [UIBarButtonItem] = []
         let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let weatherChannelBarButtonItem = UIBarButtonItem(customView: weatherChannelButton)
@@ -84,6 +88,11 @@ class WeatherPageViewController: UIViewController {
         items.append(weatherListBarButtonItem)
         
         pageToolbar.setItems(items, animated: true)
+    }
+    
+    private func setButtonEvent() {
+        weatherChannelButton.addTarget(self, action: #selector(touchWeatherChannelButton(_:)), for: .touchUpInside)
+        weatherListButton.addTarget(self, action: #selector(touchWeatherListButton(_:)), for: .touchUpInside)
     }
     
     private func instantiateViewController(index: Int) -> UIViewController {
@@ -105,9 +114,36 @@ class WeatherPageViewController: UIViewController {
     }
     
     private func setPageControl() {
-        pageControl.numberOfPages = 5
+        pageControl.numberOfPages = locationCount
     }
     
+    // MARK: - @objc
+
+    @objc
+    private func touchWeatherChannelButton(_ button: UIButton) {
+        if let weatherSiteURL = URL(string: "https://weather.com/ko-KR/weather/today/l/37.48,126.86?par=apple_widget&locale=ko_KR") {
+            UIApplication.shared.open(weatherSiteURL)
+        }
+    }
+    
+    @objc
+    private func touchWeatherListButton(_ button: UIButton) {
+        let weatherListViewController = WeatherListViewController()
+        weatherListViewController.modalPresentationStyle = .overFullScreen
+
+        weatherListViewController.delegate = self
+        
+        self.present(weatherListViewController, animated: true, completion: nil)
+    }
+}
+
+extension WeatherPageViewController: LocationIndexProtocol {
+    func didSelectLocation(at index: Int) {
+        let weatherViewController = WeatherViewController()
+    
+        self.pageViewController.setViewControllers([weatherViewController], direction: .forward, animated: true, completion: nil)
+        self.pageControl.currentPage = index
+    }
 }
 
 extension WeatherPageViewController: UIPageViewControllerDelegate {
@@ -134,7 +170,7 @@ extension WeatherPageViewController: UIPageViewControllerDataSource {
             return nil
         }
         
-        let nextIndex = index > 0 ? index - 1 : 5 - 1
+        let nextIndex = index > 0 ? index - 1 : locationCount - 1
         
         let nextViewController = instantiateViewController(index: nextIndex)
         return nextViewController
@@ -146,7 +182,7 @@ extension WeatherPageViewController: UIPageViewControllerDataSource {
         guard let index = pageViewController.viewControllers?.first?.view.tag else {
             return nil
         }
-        let nextIndex = (index + 1) % 5
+        let nextIndex = (index + 1) % locationCount
         let nextViewController = instantiateViewController(index: nextIndex)
         return nextViewController
     }
