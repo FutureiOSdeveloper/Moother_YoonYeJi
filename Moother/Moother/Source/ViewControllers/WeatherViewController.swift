@@ -114,15 +114,15 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = Size.headerHeight / 2 - scrollView.contentOffset.y
-        let percent = offset / 50
+        let percent = offset / 100
         
         /// 라벨 top Constraint, alpha값 조절
         if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < Size.headerHeight {
             cityLabel.snp.updateConstraints {
                 $0.top.equalToSuperview().offset(max(offset, Size.minimumOffset))
             }
-            minAndMaxTemperatureLabel.alpha = percent
-            temperatureLabel.alpha = percent + 0.2
+            minAndMaxTemperatureLabel.alpha = percent / 2
+            temperatureLabel.alpha = percent / 2 + 0.2
         } else if scrollView.contentOffset.y <= 0 {
             cityLabel.snp.updateConstraints {
                 $0.top.equalToSuperview().offset(min(offset, Size.maximumOffset))
@@ -140,6 +140,13 @@ extension WeatherViewController: UITableViewDelegate {
                     customCell.maskCell(fromTop: hiddenFrameHeight)
                 }
             }
+        }
+    }
+    
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if scrollView.contentOffset.y > 0 {
+            scrollView.setContentOffset(CGPoint(x: scrollView.bounds.width, y: Size.headerHeight), animated: true)
         }
     }
     
