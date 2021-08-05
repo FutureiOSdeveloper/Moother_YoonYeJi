@@ -104,9 +104,9 @@ class WeatherViewController: UIViewController {
     }
     
     private func registerCell() {
-        weatherTableView.register(DayTableViewCell.self, forCellReuseIdentifier: Const.cell.dayTableViewCell)
-        weatherTableView.register(TodayWeatherTableViewCell.self, forCellReuseIdentifier: Const.cell.todayWeatherTableViewCell)
-        weatherTableView.register(WeatherInfoTableViewCell.self, forCellReuseIdentifier: Const.cell.weatherInfoTableViewCell)
+        weatherTableView.register(DayTableViewCell.self, forCellReuseIdentifier: Const.Cell.dayTableViewCell)
+        weatherTableView.register(TodayWeatherTableViewCell.self, forCellReuseIdentifier: Const.Cell.todayWeatherTableViewCell)
+        weatherTableView.register(WeatherInfoTableViewCell.self, forCellReuseIdentifier: Const.Cell.weatherInfoTableViewCell)
     }
     
 }
@@ -219,22 +219,22 @@ extension WeatherViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 1: /// 날짜별 날씨셀
-            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.dayTableViewCell, for: indexPath) as? DayTableViewCell else { return UITableViewCell() }
+            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.dayTableViewCell, for: indexPath) as? DayTableViewCell else { return UITableViewCell() }
             cell.configureUI()
             cell.selectionStyle = .none
             return cell
         case 2: /// 오늘 날씨셀
-            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
+            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
             cell.configureUI()
             cell.selectionStyle = .none
             return cell
         case 3: /// 날씨 Detail Info 셀
-            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.weatherInfoTableViewCell, for: indexPath) as? WeatherInfoTableViewCell else { return UITableViewCell() }
+            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.weatherInfoTableViewCell, for: indexPath) as? WeatherInfoTableViewCell else { return UITableViewCell() }
             cell.configureUI()
             cell.selectionStyle = .none
             return cell
         case 4:
-            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
+            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
             cell.configureUI()
             cell.selectionStyle = .none
             cell.setLabel(text: "광명시 날씨.")
