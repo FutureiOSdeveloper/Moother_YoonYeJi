@@ -9,6 +9,8 @@ import UIKit
 
 class HoursHeaderView: UIView {
     
+    // MARK: - UI Properites
+    
     private var separatorTopLabel = UIView().then {
         $0.backgroundColor = .white
     }
@@ -26,6 +28,8 @@ class HoursHeaderView: UIView {
         $0.collectionViewLayout = layout
     }
     
+    // MARK: - View Life Cycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -35,6 +39,8 @@ class HoursHeaderView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Function
     
     private func configureUI() {
         addSubviews(HoursCollectionView, separatorTopLabel, separatorBottomLabel)
