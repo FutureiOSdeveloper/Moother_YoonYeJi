@@ -69,5 +69,9 @@ class WeatherListTableViewCell: UITableViewCell {
             $0.trailing.equalToSuperview().offset(-10)
         }
     }
+    
+    public func setTemperature(temperature: Double) {
+        temperatureLabel.text = "\(temperature)"
+    }
 
 }

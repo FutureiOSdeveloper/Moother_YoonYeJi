@@ -9,13 +9,19 @@ import UIKit
 
 class WeatherListViewController: UIViewController {
 
+    // MARK: - UI Properties
+    
     private var weatherListTableView = UITableView().then {
         $0.contentInsetAdjustmentBehavior = .never
         $0.backgroundColor = .black
     }
+    private let footerView = WeatherListFooterView()
     
-    public var delegate: LocationIndexProtocol?
+    // MARK: - Properties
     
+    public var delegate: LoctaionDelegate?
+    public var temperature: Double = 27
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +48,34 @@ class WeatherListViewController: UIViewController {
     }
 }
 
+extension WeatherListViewController: TemperatureDelegate {
+    func switchButtonDidSelected(unit temperature: temperature) {
+       
+        if temperature == .fahrenheit {
+            convertCeltoFah()
+        } else {
+            convertFahToCel()
+        }
+        
+        weatherListTableView.reloadData()
+        
+        if temperature == .fahrenheit {
+            footerView.temperatureSwitchButton.isSelected = true
+        } else {
+            footerView.temperatureSwitchButton.isSelected = false
+        }
+    
+    }
+    
+    private func convertCeltoFah() {
+        self.temperature = round(Double(self.temperature * 1.8) + 32)
+    }
+    
+    private func convertFahToCel() {
+        self.temperature = round(Double(self.temperature - 32) / 1.8)
+    }
+}
+
 extension WeatherListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
@@ -57,14 +91,16 @@ extension WeatherListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return WeatherListFooterView()
+        footerView.delegate = self
+        
+        return footerView
     }
 }
 
 extension WeatherListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didSelectLocation(at: indexPath.row)
+        delegate?.tableViewDidSelected(tableView, at: indexPath.row)
         
         self.dismiss(animated: true, completion: nil)
     }
@@ -85,6 +121,8 @@ extension WeatherListViewController: UITableViewDataSource {
             cell.configureUI(isFirstCell: false)
             cell.backgroundColor = .gray
         }
+        
+        cell.setTemperature(temperature: temperature)
         
         return cell
     }

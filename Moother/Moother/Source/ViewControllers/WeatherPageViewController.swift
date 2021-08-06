@@ -137,8 +137,8 @@ class WeatherPageViewController: UIViewController {
     }
 }
 
-extension WeatherPageViewController: LocationIndexProtocol {
-    func didSelectLocation(at index: Int) {
+extension WeatherPageViewController: LoctaionDelegate {
+    func tableViewDidSelected(_ tableView: UITableView, at index: Int) {
         let weatherViewController = WeatherViewController()
     
         self.pageViewController.setViewControllers([weatherViewController], direction: .forward, animated: true, completion: nil)
