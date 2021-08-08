@@ -17,7 +17,7 @@ class WeatherPageViewController: UIViewController {
         $0.currentPageIndicatorTintColor = .white
         $0.pageIndicatorTintColor = UIColor.white.withAlphaComponent(0.5)
     }
-    private let pageToolbar = UIToolbar().then {
+    private let pageToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60)).then {
         $0.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
     }
     private let weatherChannelButton = UIButton().then {
@@ -64,13 +64,11 @@ class WeatherPageViewController: UIViewController {
         }
 
         weatherChannelButton.snp.makeConstraints {
-            $0.height.equalTo(30)
-            $0.width.equalTo(30)
+            $0.height.width.equalTo(30)
         }
 
         weatherListButton.snp.makeConstraints {
-            $0.height.equalTo(30)
-            $0.width.equalTo(30)
+            $0.height.width.equalTo(30)
         }
     }
     
