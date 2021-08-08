@@ -26,6 +26,7 @@
 		AA4C3ADC26B1CEE200D47CBA /* HoursCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4C3ADB26B1CEE200D47CBA /* HoursCollectionViewCell.swift */; };
 		AA4C3AF026B2C5C500D47CBA /* DayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4C3AEF26B2C5C500D47CBA /* DayTableViewCell.swift */; };
 		AA4C3AF626B2CB9200D47CBA /* WeatherInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4C3AF526B2CB9200D47CBA /* WeatherInfoTableViewCell.swift */; };
+		AA6280C726BFFCC9003506E7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6280C626BFFCC9003506E7 /* UILabel+Extension.swift */; };
 		AA9C0C9D26AC6C0500200B6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0C9C26AC6C0500200B6C /* AppDelegate.swift */; };
 		AA9C0C9F26AC6C0500200B6C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0C9E26AC6C0500200B6C /* SceneDelegate.swift */; };
 		AA9C0CA126AC6C0500200B6C /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0CA026AC6C0500200B6C /* WeatherViewController.swift */; };
@@ -60,6 +61,7 @@
 		AA4C3ADB26B1CEE200D47CBA /* HoursCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursCollectionViewCell.swift; sourceTree = "<group>"; };
 		AA4C3AEF26B2C5C500D47CBA /* DayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTableViewCell.swift; sourceTree = "<group>"; };
 		AA4C3AF526B2CB9200D47CBA /* WeatherInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfoTableViewCell.swift; sourceTree = "<group>"; };
+		AA6280C626BFFCC9003506E7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		AA9C0C9926AC6C0500200B6C /* Moother.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moother.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA9C0C9C26AC6C0500200B6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA9C0C9E26AC6C0500200B6C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			children = (
 				AA4C3AD026B1C0D100D47CBA /* UIView+Extension.swift */,
 				AA1BE56426BB5D9100DCA876 /* UIColor+Extension.swift */,
+				AA6280C626BFFCC9003506E7 /* UILabel+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				AA9C0C9F26AC6C0500200B6C /* SceneDelegate.swift in Sources */,
 				AA4C3AD926B1CEA200D47CBA /* Cell.swift in Sources */,
 				AA4C3AF026B2C5C500D47CBA /* DayTableViewCell.swift in Sources */,
+				AA6280C726BFFCC9003506E7 /* UILabel+Extension.swift in Sources */,
 				AA9C0CBF26ADA39600200B6C /* Const.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -130,7 +130,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
+        if searchText.isEmpty {
             searchResults.removeAll()
             searchResultTableView.reloadData()
         }
@@ -174,10 +174,7 @@ extension SearchViewController: UITableViewDataSource {
         
         /// 검색 결과 중 검색창에 입력한 부분만 하이라이팅
         if let highlightText = searchBar.searchTextField.text {
-            let attributtedString = NSMutableAttributedString(string: cell.locationLabel.text!)
-            attributtedString.addAttribute(.foregroundColor, value: UIColor.white, range: (cell.locationLabel.text! as NSString).range(of: highlightText))
-            
-            cell.locationLabel.attributedText = attributtedString
+            cell.locationLabel.addHighlightingText(highlightText: highlightText)
         }
         
         return cell
