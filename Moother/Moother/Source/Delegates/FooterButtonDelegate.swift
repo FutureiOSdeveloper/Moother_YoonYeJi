@@ -16,3 +16,6 @@ protocol TemperatureDelegate {
     func switchButtonDidSelected(unit temperature: temperature)
 }
 
+protocol SearchDelegate {
+    func searchButtonDidSelected()
+}

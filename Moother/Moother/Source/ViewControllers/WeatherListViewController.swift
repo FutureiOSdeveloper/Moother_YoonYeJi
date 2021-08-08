@@ -20,7 +20,7 @@ class WeatherListViewController: UIViewController {
     // MARK: - Properties
     
     public var delegate: LoctaionDelegate?
-    public var temperature: Double = 27
+    public var temperature: Int = 27
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,11 +68,18 @@ extension WeatherListViewController: TemperatureDelegate {
     }
     
     private func convertCeltoFah() {
-        self.temperature = round(Double(self.temperature * 1.8) + 32)
+        self.temperature = Int(round(Double(self.temperature) * 1.8) + 32)
     }
     
     private func convertFahToCel() {
-        self.temperature = round(Double(self.temperature - 32) / 1.8)
+        self.temperature = Int(round(Double(self.temperature - 32) / 1.8))
+    }
+}
+
+extension WeatherListViewController: SearchDelegate {
+    func searchButtonDidSelected() {
+        let searchViewController = SearchViewController()
+        self.present(searchViewController, animated: true, completion: nil)
     }
 }
 
@@ -91,7 +98,8 @@ extension WeatherListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        footerView.delegate = self
+        footerView.delegateOfSwitchButton = self
+        footerView.delegateOfSearchButton = self
         
         return footerView
     }

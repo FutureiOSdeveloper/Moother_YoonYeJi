@@ -16,5 +16,6 @@ extension Const {
         static let weatherContainerTableViewCell = "WeatherContainerTableViewCell"
         static let todayWeatherTableViewCell = "TodayWeatherTableViewCell"
         static let weatherListTableViewCell = "WeatherListTableViewCell"
+        static let searchResultTableViewCell = "SearchResultTableViewCell"
     }
 }

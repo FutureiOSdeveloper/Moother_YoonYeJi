@@ -70,7 +70,7 @@ class WeatherListTableViewCell: UITableViewCell {
         }
     }
     
-    public func setTemperature(temperature: Double) {
+    public func setTemperature(temperature: Int) {
         temperatureLabel.text = "\(temperature)"
     }
 

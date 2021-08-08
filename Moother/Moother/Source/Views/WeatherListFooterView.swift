@@ -24,7 +24,8 @@ class WeatherListFooterView: UIView {
         $0.tintColor = .white
     }
     
-    public var delegate: TemperatureDelegate?
+    public var delegateOfSwitchButton: TemperatureDelegate?
+    public var delegateOfSearchButton: SearchDelegate?
     
     // MARK: - View Life Cycle
     
@@ -75,14 +76,20 @@ class WeatherListFooterView: UIView {
     
     private func setButtonEvent() {
         temperatureSwitchButton.addTarget(self, action: #selector(touchTemperatureSwitchButton(_:)), for: .touchUpInside)
+        searchButton.addTarget(self, action: #selector(touchSearchButton(_:)), for: .touchUpInside)
     }
     
     @objc
     private func touchTemperatureSwitchButton(_ button: UIButton) {
         if temperatureSwitchButton.isSelected {
-            delegate?.switchButtonDidSelected(unit: .celsius)
+            delegateOfSwitchButton?.switchButtonDidSelected(unit: .celsius)
         } else {
-            delegate?.switchButtonDidSelected(unit: .fahrenheit)
+            delegateOfSwitchButton?.switchButtonDidSelected(unit: .fahrenheit)
         }
+    }
+    
+    @objc
+    private func touchSearchButton(_ button: UIButton) {
+        delegateOfSearchButton?.searchButtonDidSelected()
     }
 }
