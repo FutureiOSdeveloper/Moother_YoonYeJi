@@ -28,6 +28,18 @@
 		AA4C3AF626B2CB9200D47CBA /* WeatherInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4C3AF526B2CB9200D47CBA /* WeatherInfoTableViewCell.swift */; };
 		AA6280C726BFFCC9003506E7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6280C626BFFCC9003506E7 /* UILabel+Extension.swift */; };
 		AA62812726C504CB003506E7 /* LocationModalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62812626C504CB003506E7 /* LocationModalDelegate.swift */; };
+		AA62813526C5168B003506E7 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62813426C5168B003506E7 /* Weather.swift */; };
+		AA62813926C58A81003506E7 /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62813826C58A81003506E7 /* WeatherResponse.swift */; };
+		AA62813C26C591FE003506E7 /* Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62813B26C591FE003506E7 /* Current.swift */; };
+		AA62813F26C59219003506E7 /* Rain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62813E26C59219003506E7 /* Rain.swift */; };
+		AA62814226C59280003506E7 /* Daily.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62814126C59280003506E7 /* Daily.swift */; };
+		AA62814526C592A7003506E7 /* FeelsLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62814426C592A7003506E7 /* FeelsLike.swift */; };
+		AA62814926C592BB003506E7 /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62814826C592BB003506E7 /* Temperature.swift */; };
+		AA62814F26C5966D003506E7 /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62814E26C5966D003506E7 /* NetworkResult.swift */; };
+		AA62815326C596FE003506E7 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62815226C596FE003506E7 /* WeatherAPI.swift */; };
+		AA62815626C59740003506E7 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62815526C59740003506E7 /* WeatherService.swift */; };
+		AA62815926C5A0FC003506E7 /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62815826C5A0FC003506E7 /* MoyaLoggingPlugin.swift */; };
+		AA62815D26C5AAA4003506E7 /* keySecurity.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA62815C26C5AAA4003506E7 /* keySecurity.plist */; };
 		AA9C0C9D26AC6C0500200B6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0C9C26AC6C0500200B6C /* AppDelegate.swift */; };
 		AA9C0C9F26AC6C0500200B6C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0C9E26AC6C0500200B6C /* SceneDelegate.swift */; };
 		AA9C0CA126AC6C0500200B6C /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0CA026AC6C0500200B6C /* WeatherViewController.swift */; };
@@ -64,6 +76,19 @@
 		AA4C3AF526B2CB9200D47CBA /* WeatherInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfoTableViewCell.swift; sourceTree = "<group>"; };
 		AA6280C626BFFCC9003506E7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		AA62812626C504CB003506E7 /* LocationModalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModalDelegate.swift; sourceTree = "<group>"; };
+		AA62813426C5168B003506E7 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		AA62813826C58A81003506E7 /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
+		AA62813B26C591FE003506E7 /* Current.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Current.swift; sourceTree = "<group>"; };
+		AA62813E26C59219003506E7 /* Rain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rain.swift; sourceTree = "<group>"; };
+		AA62814126C59280003506E7 /* Daily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Daily.swift; sourceTree = "<group>"; };
+		AA62814426C592A7003506E7 /* FeelsLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeelsLike.swift; sourceTree = "<group>"; };
+		AA62814826C592BB003506E7 /* Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
+		AA62814E26C5966D003506E7 /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
+		AA62815226C596FE003506E7 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
+		AA62815526C59740003506E7 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		AA62815826C5A0FC003506E7 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
+		AA62815C26C5AAA4003506E7 /* keySecurity.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = keySecurity.plist; sourceTree = "<group>"; };
+		AA62816326C5ACCE003506E7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		AA9C0C9926AC6C0500200B6C /* Moother.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moother.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA9C0C9C26AC6C0500200B6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA9C0C9E26AC6C0500200B6C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +167,31 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		AA62813326C515DB003506E7 /* APIModel */ = {
+			isa = PBXGroup;
+			children = (
+				AA62813426C5168B003506E7 /* Weather.swift */,
+				AA62813B26C591FE003506E7 /* Current.swift */,
+				AA62813826C58A81003506E7 /* WeatherResponse.swift */,
+				AA62813E26C59219003506E7 /* Rain.swift */,
+				AA62814126C59280003506E7 /* Daily.swift */,
+				AA62814426C592A7003506E7 /* FeelsLike.swift */,
+				AA62814826C592BB003506E7 /* Temperature.swift */,
+			);
+			path = APIModel;
+			sourceTree = "<group>";
+		};
+		AA62814D26C595E3003506E7 /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				AA62814E26C5966D003506E7 /* NetworkResult.swift */,
+				AA62815226C596FE003506E7 /* WeatherAPI.swift */,
+				AA62815526C59740003506E7 /* WeatherService.swift */,
+				AA62815826C5A0FC003506E7 /* MoyaLoggingPlugin.swift */,
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
 		AA9C0C9026AC6C0500200B6C = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +222,8 @@
 		AA9C0CB226AC91DE00200B6C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				AA62814D26C595E3003506E7 /* APIService */,
+				AA62813326C515DB003506E7 /* APIModel */,
 				AA1BE57926BC3F5500DCA876 /* Delegates */,
 				AA4C3AED26B1F60600D47CBA /* Views */,
 				AA4C3AD426B1C86E00D47CBA /* Cells */,
@@ -190,6 +242,8 @@
 				AA9C0CA526AC6C0D00200B6C /* Assets.xcassets */,
 				AA9C0CA726AC6C0D00200B6C /* LaunchScreen.storyboard */,
 				AA9C0CAA26AC6C0D00200B6C /* Info.plist */,
+				AA62815C26C5AAA4003506E7 /* keySecurity.plist */,
+				AA62816326C5ACCE003506E7 /* Config.xcconfig */,
 				AA1BE56126BB5CFF00DCA876 /* Color.xcassets */,
 			);
 			path = Resource;
@@ -286,6 +340,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA62815D26C5AAA4003506E7 /* keySecurity.plist in Resources */,
 				AA9C0CA926AC6C0D00200B6C /* LaunchScreen.storyboard in Resources */,
 				AA9C0CA626AC6C0D00200B6C /* Assets.xcassets in Resources */,
 				AA1BE56226BB5CFF00DCA876 /* Color.xcassets in Resources */,
@@ -345,28 +400,39 @@
 				AA1BE56526BB5D9100DCA876 /* UIColor+Extension.swift in Sources */,
 				AA1BE54B26BB0AAB00DCA876 /* HoursHeaderView.swift in Sources */,
 				AA9C0CBC26ADA38200200B6C /* URL.swift in Sources */,
+				AA62815926C5A0FC003506E7 /* MoyaLoggingPlugin.swift in Sources */,
+				AA62813526C5168B003506E7 /* Weather.swift in Sources */,
 				AA9C0CA126AC6C0500200B6C /* WeatherViewController.swift in Sources */,
+				AA62814F26C5966D003506E7 /* NetworkResult.swift in Sources */,
 				AA1BE56B26BC0E0500DCA876 /* WeatherListViewController.swift in Sources */,
 				AA1BE58C26BD58B400DCA876 /* SearchResultTableViewCell.swift in Sources */,
+				AA62815326C596FE003506E7 /* WeatherAPI.swift in Sources */,
 				AA1BE55426BB27EE00DCA876 /* SeparatorLineview.swift in Sources */,
 				AA1BE58326BCC91C00DCA876 /* FooterButtonDelegate.swift in Sources */,
 				AA9C0CB826ADA37500200B6C /* Image.swift in Sources */,
 				AA1BE57326BC1ECC00DCA876 /* WeatherListTableViewCell.swift in Sources */,
+				AA62813926C58A81003506E7 /* WeatherResponse.swift in Sources */,
 				AA13D2C226B3E305007D4D3D /* WeatherPageViewController.swift in Sources */,
 				AA4C3AF626B2CB9200D47CBA /* WeatherInfoTableViewCell.swift in Sources */,
+				AA62814926C592BB003506E7 /* Temperature.swift in Sources */,
 				AA1BE57726BC364400DCA876 /* WeatherListFooterView.swift in Sources */,
 				AA4C3AD126B1C0D100D47CBA /* UIView+Extension.swift in Sources */,
 				AA62812726C504CB003506E7 /* LocationModalDelegate.swift in Sources */,
 				AA1BE57B26BC3FB400DCA876 /* LocationTableViewDelegate.swift in Sources */,
 				AA1BE55026BB1FCD00DCA876 /* TodayWeatherTableViewCell.swift in Sources */,
 				AA9C0C9D26AC6C0500200B6C /* AppDelegate.swift in Sources */,
+				AA62813C26C591FE003506E7 /* Current.swift in Sources */,
 				AA9C0CCA26ADB2E000200B6C /* ViewController.swift in Sources */,
 				AA1BE58826BD4E2400DCA876 /* SearchViewController.swift in Sources */,
 				AA1BE55B26BB2A3B00DCA876 /* WeatherDetailInfoView.swift in Sources */,
+				AA62814226C59280003506E7 /* Daily.swift in Sources */,
 				AA9C0C9F26AC6C0500200B6C /* SceneDelegate.swift in Sources */,
 				AA4C3AD926B1CEA200D47CBA /* Cell.swift in Sources */,
 				AA4C3AF026B2C5C500D47CBA /* DayTableViewCell.swift in Sources */,
+				AA62814526C592A7003506E7 /* FeelsLike.swift in Sources */,
 				AA6280C726BFFCC9003506E7 /* UILabel+Extension.swift in Sources */,
+				AA62813F26C59219003506E7 /* Rain.swift in Sources */,
+				AA62815626C59740003506E7 /* WeatherService.swift in Sources */,
 				AA9C0CBF26ADA39600200B6C /* Const.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -387,6 +453,7 @@
 /* Begin XCBuildConfiguration section */
 		AA9C0CAB26AC6C0D00200B6C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA62816326C5ACCE003506E7 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

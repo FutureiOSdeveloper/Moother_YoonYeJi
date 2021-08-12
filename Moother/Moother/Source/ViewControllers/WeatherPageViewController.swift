@@ -47,6 +47,7 @@ class WeatherPageViewController: UIViewController {
         setUI()
         setToolbarItem()
         setButtonEvent()
+        getWeatherInfo(lat: 33.44, lon: -94.04, exclude: "minutely,alerts")
     }
     
     // MARK: - Function
@@ -188,4 +189,14 @@ extension WeatherPageViewController: UIPageViewControllerDataSource {
         let nextViewController = instantiateViewController(index: nextIndex)
         return nextViewController
     }
+}
+
+extension WeatherPageViewController {
+    
+    func getWeatherInfo(lat: Double, lon: Double, exclude: String) {
+        WeatherAPI.shared.getWeatherData(latitude: lat, longitude: lon, exclude: exclude) { (response) in
+            print(response)
+        }
+    }
+    
 }

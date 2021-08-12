@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  Moother
+//
+//  Created by 윤예지 on 2021/08/13.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+API_KEY = f7a57033af2876b4ccb6e9c08ee03b30
