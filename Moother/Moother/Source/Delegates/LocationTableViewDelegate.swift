@@ -7,6 +7,6 @@
 
 import UIKit
 
-protocol LoctaionDelegate {
+protocol LocationTableViewDelegate {
     func tableViewDidSelected(_ tableView: UITableView, at index: Int)
 }

@@ -19,7 +19,7 @@ class WeatherListViewController: UIViewController {
     
     // MARK: - Properties
     
-    public var delegate: LoctaionDelegate?
+    public var delegate: LocationTableViewDelegate?
     public var temperature: Int = 27
 
     override func viewDidLoad() {
