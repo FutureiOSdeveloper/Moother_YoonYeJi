@@ -43,13 +43,24 @@ class WeatherViewController: UIViewController {
     }
     private let backgroundImageView = UIImageView().then {
         $0.image = Const.Image.backgroundImage
-        $0.alpha = 0.3
     }
     private let minAndMaxTemperatureLabel = UILabel().then {
         $0.text = "최고:22° 최저:12°"
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .white
     }
+    private let cancelButton = UIButton().then {
+        $0.setTitle("취소", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+    }
+    private let addButton = UIButton().then {
+        $0.setTitle("추가", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+    }
+    
+    // MARK: - Properties
+    
+    public var delegate: LocationModalDelegate?
     
     // MARK: - View Life Cycle
     
@@ -109,6 +120,38 @@ class WeatherViewController: UIViewController {
         weatherTableView.register(WeatherInfoTableViewCell.self, forCellReuseIdentifier: Const.Cell.weatherInfoTableViewCell)
     }
     
+    private func addCancelAndAddButton() {
+        view.addSubviews(cancelButton, addButton)
+        
+        cancelButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(10)
+            $0.leading.equalToSuperview().offset(10)
+            cancelButton.addTarget(self, action: #selector(touchCancelButton(_:)), for: .touchUpInside)
+        }
+        addButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
+            addButton.addTarget(self, action: #selector(touchAddButton(_:)), for: .touchUpInside)
+        }
+    }
+    
+    public func updateWeatherInfo(city: String) {
+        addCancelAndAddButton()
+        cityLabel.text = city
+    }
+    
+    @objc
+    private func touchAddButton(_ button: UIButton) {
+        if let location = cityLabel.text {
+            delegate?.addLocation(location)
+        }
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc
+    private func touchCancelButton(_ button: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension WeatherViewController: UITableViewDelegate {
