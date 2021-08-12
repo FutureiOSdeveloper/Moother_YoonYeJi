@@ -9,4 +9,5 @@ target 'Moother' do
  pod 'SnapKit'
  pod 'Then'
  pod 'SwiftLint'
+ pod 'Moya'
 end
