@@ -35,13 +35,14 @@ class WeatherPageViewController: UIViewController {
     // MARK: - Properties
     
     private var locationCount = 5
+    private var index = 0
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setPageViewController()
+        setPageViewController(index: index)
         setPageControl()
         setUI()
         setToolbarItem()
@@ -99,11 +100,11 @@ class WeatherPageViewController: UIViewController {
         return viewController
     }
     
-    private func setPageViewController() {
+    private func setPageViewController(index: Int) {
         pageViewController.dataSource = self
         pageViewController.delegate = self
         
-        let weatherViewController = instantiateViewController(index: 0)
+        let weatherViewController = instantiateViewController(index: index)
         pageViewController.setViewControllers([weatherViewController], direction: .forward, animated: true, completion: nil)
         
         addChild(pageViewController)
@@ -113,6 +114,12 @@ class WeatherPageViewController: UIViewController {
     
     private func setPageControl() {
         pageControl.numberOfPages = locationCount
+    }
+    
+    private func changeCurrentPosition(at index: Int) {
+        let weatherViewController = instantiateViewController(index: index)
+        pageViewController.setViewControllers([weatherViewController], direction: .forward, animated: true, completion: nil)
+        pageControl.currentPage = index
     }
     
     // MARK: - @objc
@@ -127,7 +134,7 @@ class WeatherPageViewController: UIViewController {
     @objc
     private func touchWeatherListButton(_ button: UIButton) {
         let weatherListViewController = WeatherListViewController()
-        weatherListViewController.modalPresentationStyle = .overFullScreen
+        weatherListViewController.modalPresentationStyle = .overCurrentContext
 
         weatherListViewController.delegate = self
         
@@ -137,10 +144,7 @@ class WeatherPageViewController: UIViewController {
 
 extension WeatherPageViewController: LoctaionDelegate {
     func tableViewDidSelected(_ tableView: UITableView, at index: Int) {
-        let weatherViewController = WeatherViewController()
-    
-        self.pageViewController.setViewControllers([weatherViewController], direction: .forward, animated: true, completion: nil)
-        self.pageControl.currentPage = index
+        changeCurrentPosition(at: index)
     }
 }
 
