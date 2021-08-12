@@ -157,6 +157,35 @@ extension SearchViewController: UITableViewDelegate {
         cell.backgroundColor = .clear
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedResult = searchResults[indexPath.row]
+        let searchRequest = MKLocalSearch.Request(completion: selectedResult)
+        let search = MKLocalSearch(request: searchRequest)
+        
+        search.start { (response, error) in
+            guard error == nil else {
+                return
+            }
+            guard let placeMark = response?.mapItems[0].placemark else {
+                return
+            }
+            let weatherViewController = WeatherViewController()
+            weatherViewController.delegate = self
+            if let area = placeMark.locality {
+                weatherViewController.updateWeatherInfo(city: area)
+            }
+            self.present(weatherViewController, animated: true, completion: nil)
+        }
+    }
+    
+}
+
+extension SearchViewController: LocationModalDelegate {
+
+    func addLocation(_ location: String) {
+        print(location)
+    }
+
 }
 
 extension SearchViewController: UITableViewDataSource {
@@ -167,15 +196,16 @@ extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = searchResultTableView.dequeueReusableCell(withIdentifier: Const.Cell.searchResultTableViewCell, for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
+        let searchResult = searchResults[indexPath.row]
         
         cell.configureUI()
-        let searchResult = searchResults[indexPath.row]
         cell.setData(location: searchResult.title)
         
         /// 검색 결과 중 검색창에 입력한 부분만 하이라이팅
         if let highlightText = searchBar.searchTextField.text {
             cell.locationLabel.addHighlightingText(highlightText: highlightText)
         }
+        cell.selectionStyle = .none
         
         return cell
     }

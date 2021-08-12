@@ -142,7 +142,7 @@ class WeatherPageViewController: UIViewController {
     }
 }
 
-extension WeatherPageViewController: LoctaionDelegate {
+extension WeatherPageViewController: LocationTableViewDelegate {
     func tableViewDidSelected(_ tableView: UITableView, at index: Int) {
         changeCurrentPosition(at: index)
     }
