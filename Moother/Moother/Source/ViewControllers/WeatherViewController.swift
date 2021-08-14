@@ -12,7 +12,7 @@ import Then
 
 enum Size {
     static let headerHeight: CGFloat = 260
-    static let minimumOffset: CGFloat = 60
+    static let minimumOffset: CGFloat = 75
     static let maximumOffset: CGFloat = 130
     static let hoursSectionHeight: CGFloat = 240
     static let separatorHeight: CGFloat = 0.5
@@ -27,17 +27,15 @@ class WeatherViewController: UIViewController {
         $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     private let cityLabel = UILabel().then {
-        $0.text = "광명시"
+        $0.text = "_ _"
         $0.font = UIFont.systemFont(ofSize: 32, weight: .light)
         $0.textColor = .white
     }
     private let statusLabel = UILabel().then {
-        $0.text = "매우 맑음"
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .white
     }
     private let temperatureLabel = UILabel().then {
-        $0.text = "27°"
         $0.font = UIFont.systemFont(ofSize: 80, weight: .thin)
         $0.textColor = .white
     }
@@ -45,7 +43,6 @@ class WeatherViewController: UIViewController {
         $0.image = Const.Image.backgroundImage
     }
     private let minAndMaxTemperatureLabel = UILabel().then {
-        $0.text = "최고:22° 최저:12°"
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .white
     }
@@ -61,6 +58,11 @@ class WeatherViewController: UIViewController {
     // MARK: - Properties
     
     public var delegate: LocationModalDelegate?
+    private var hourlyList: [AppHour] = []
+    private var dayList: [AppDay] = []
+    private var today: Today = Today(description: "", currentTemp: 0, maxTemp: 0)
+    private var todayDetailTitle: [[String]] = []
+    private var todayDetailInfo: [[Any]] = []
     
     // MARK: - View Life Cycle
     
@@ -186,7 +188,6 @@ extension WeatherViewController: UITableViewDelegate {
         }
     }
     
-    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < Size.hoursSectionHeight {
             scrollView.setContentOffset(CGPoint(x: scrollView.bounds.width, y: Size.headerHeight), animated: true)
@@ -213,7 +214,7 @@ extension WeatherViewController: UITableViewDelegate {
         case 0:
             return 0
         case 1:
-            return 9
+            return dayList.count
         case 2:
             return 1
         case 3:
@@ -235,7 +236,7 @@ extension WeatherViewController: UITableViewDelegate {
             return UITableView.automaticDimension
         }
     }
-
+    
 }
 
 extension WeatherViewController: UITableViewDataSource {
@@ -247,7 +248,9 @@ extension WeatherViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
         case 1:
-            return HoursHeaderView()
+            let headerView = HoursHeaderView()
+            headerView.setHourData(hour: hourlyList)
+            return headerView
         case 2:
             return SeparatorLineView()
         case 3:
@@ -264,29 +267,82 @@ extension WeatherViewController: UITableViewDataSource {
         case 1: /// 날짜별 날씨셀
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.dayTableViewCell, for: indexPath) as? DayTableViewCell else { return UITableViewCell() }
             cell.configureUI()
+            cell.setData(dayInfo: dayList[indexPath.row])
             cell.selectionStyle = .none
             return cell
         case 2: /// 오늘 날씨셀
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
             cell.configureUI()
+            cell.setTodayLabel(todayInfo: today)
             cell.selectionStyle = .none
             return cell
         case 3: /// 날씨 Detail Info 셀
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.weatherInfoTableViewCell, for: indexPath) as? WeatherInfoTableViewCell else { return UITableViewCell() }
             cell.configureUI()
+            if todayDetailInfo.count > 1 {
+                cell.setData(title: todayDetailTitle[indexPath.row], info: todayDetailInfo[indexPath.row])
+            }
             cell.selectionStyle = .none
             return cell
         case 4:
             guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
             cell.configureUI()
             cell.selectionStyle = .none
-            cell.setLabel(text: "광명시 날씨.")
+            cell.setLabel(text: cityLabel.text! + " 날씨.")
             return cell
         default:
             return UITableViewCell()
         }
     }
     
-    
 }
 
+extension WeatherViewController {
+
+    // MARK: - TableView Data Setting
+    
+    func setWeatherInfo(WeatherInfo: WeatherResponse) {
+        setHeaderInfo(WeatherInfo: WeatherInfo)
+        setHourCellInfo(HourInfo: WeatherInfo.hourly)
+        setDayCellInfo(DailyInfo: WeatherInfo.daily)
+        setTodayInfo(TodayInfo: WeatherInfo.current)
+        setTodayDetailInfo(TodayInfo: WeatherInfo.current)
+        weatherTableView.reloadData()
+    }
+    
+    func setHeaderInfo(WeatherInfo: WeatherResponse) {
+        cityLabel.text = WeatherInfo.timezone
+        statusLabel.text = WeatherInfo.current.weather[0].weatherDescription
+        temperatureLabel.text = "\(Int(WeatherInfo.current.temp))°"
+        minAndMaxTemperatureLabel.text = "최고:\(Int(WeatherInfo.daily[0].temp.max))° 최저:\(Int(WeatherInfo.daily[0].temp.min))°"
+    }
+    
+    func setHourCellInfo(HourInfo: [Current]) {
+        for hour in 0...24 {
+            let hourly = HourInfo[hour]
+            hourlyList.append(AppHour(hour: hourly.dt.convertToUTCTime().getFormattedHour(), temperature: hourly.temp))
+        }
+    }
+    
+    func setDayCellInfo(DailyInfo: [Daily]) {
+        for day in 1...7 { /// 다음 날부터 나와야 하기 때문에 1부터 시작
+            let date = DailyInfo[day].dt.convertToUTCTime()
+            dayList.append(AppDay(weekDay: date.getWeekDay().toKorean(), humidity: DailyInfo[day].humidity, maxTemp: Int(DailyInfo[day].temp.max), minTemp: Int(DailyInfo[day].temp.min)))
+        }
+    }
+    
+    func setTodayInfo(TodayInfo: Current) {
+        today = Today(description: TodayInfo.weather[0].weatherDescription, currentTemp: Int(TodayInfo.temp), maxTemp: 31)
+    }
+    
+    func setTodayDetailInfo(TodayInfo: Current) {
+        let titleList = [["일출", "일몰"], ["비 올 확률", "습도"], ["바람", "체감"], ["강수량", "기압"], ["가시거리", "자외선 지수"]]
+        let infoList = [[TodayInfo.sunrise!.convertToUTCTime().getFormattedHM(), TodayInfo.sunset!.convertToUTCTime().getFormattedHM()], ["10%", "\(TodayInfo.humidity)%"], ["동북동 3m/s", "\(Int(TodayInfo.feelsLike))°"], ["0cm", "\(Int(TodayInfo.pressure)) hPa"], ["\(TodayInfo.visibility.convertToKm()) km", Int(TodayInfo.uvi)]]
+        
+        for i in 0...titleList.count-1 {
+            todayDetailTitle.append(titleList[i])
+            todayDetailInfo.append(infoList[i])
+        }
+    }
+
+}

@@ -10,7 +10,6 @@ import UIKit
 class TodayWeatherTableViewCell: UITableViewCell {
     
     private var todayWeatherLabel = UILabel().then {
-        $0.text = "오늘: 오늘 날씨 한때 흐림, 현재 기온은 25°이며 최고 기온은 33°입니다."
         $0.numberOfLines = 0
         $0.textColor = .white
     }
@@ -36,6 +35,10 @@ class TodayWeatherTableViewCell: UITableViewCell {
 
     }
 
+    public func setTodayLabel(todayInfo: Today) {
+        todayWeatherLabel.text = "오늘: 오늘 날씨는 \(todayInfo.description), 현재 기온은 \(todayInfo.currentTemp)°이며 최고 기온은 31°입니다."
+    }
+    
     public func setLabel(text: String) {
         todayWeatherLabel.text = text
     }
