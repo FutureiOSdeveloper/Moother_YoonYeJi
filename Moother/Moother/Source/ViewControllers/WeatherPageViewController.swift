@@ -36,6 +36,7 @@ class WeatherPageViewController: UIViewController {
     
     private var locationCount = 5
     private var index = 0
+    private var weatherInfo: WeatherResponse?
     
     // MARK: - View Life Cycle
     
@@ -47,7 +48,6 @@ class WeatherPageViewController: UIViewController {
         setUI()
         setToolbarItem()
         setButtonEvent()
-        getWeatherInfo(lat: 33.44, lon: -94.04, exclude: "minutely,alerts")
     }
     
     // MARK: - Function
@@ -64,11 +64,11 @@ class WeatherPageViewController: UIViewController {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(60)
         }
-
+        
         weatherChannelButton.snp.makeConstraints {
             $0.height.width.equalTo(30)
         }
-
+        
         weatherListButton.snp.makeConstraints {
             $0.height.width.equalTo(30)
         }
@@ -98,7 +98,7 @@ class WeatherPageViewController: UIViewController {
     private func instantiateViewController(index: Int) -> UIViewController {
         let viewController = WeatherViewController()
         viewController.view.tag = index
-        return viewController
+        return getWeatherInfo(lat: 37.56, lon: 126.91, exclude: "minutely,alerts", viewController: viewController)
     }
     
     private func setPageViewController(index: Int) {
@@ -124,7 +124,7 @@ class WeatherPageViewController: UIViewController {
     }
     
     // MARK: - @objc
-
+    
     @objc
     private func touchWeatherChannelButton(_ button: UIButton) {
         if let weatherSiteURL = URL(string: "https://weather.com/ko-KR/weather/today/l/37.48,126.86?par=apple_widget&locale=ko_KR") {
@@ -136,7 +136,7 @@ class WeatherPageViewController: UIViewController {
     private func touchWeatherListButton(_ button: UIButton) {
         let weatherListViewController = WeatherListViewController()
         weatherListViewController.modalPresentationStyle = .overCurrentContext
-
+        
         weatherListViewController.delegate = self
         
         self.present(weatherListViewController, animated: true, completion: nil)
@@ -155,7 +155,6 @@ extension WeatherPageViewController: UIPageViewControllerDelegate {
                             previousViewControllers: [UIViewController],
                             transitionCompleted completed: Bool
     ) {
-        
         guard completed else { return }
         
         if let viewController = pageViewController.viewControllers?.first {
@@ -165,6 +164,7 @@ extension WeatherPageViewController: UIPageViewControllerDelegate {
 }
 
 extension WeatherPageViewController: UIPageViewControllerDataSource {
+    
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
@@ -189,14 +189,32 @@ extension WeatherPageViewController: UIPageViewControllerDataSource {
         let nextViewController = instantiateViewController(index: nextIndex)
         return nextViewController
     }
+    
 }
 
 extension WeatherPageViewController {
     
-    func getWeatherInfo(lat: Double, lon: Double, exclude: String) {
+    func getWeatherInfo(lat: Double, lon: Double, exclude: String, viewController: WeatherViewController) -> UIViewController {
         WeatherAPI.shared.getWeatherData(latitude: lat, longitude: lon, exclude: exclude) { (response) in
-            print(response)
+            switch response {
+            case .success(let weatherInfo):
+                if let data = weatherInfo as? WeatherResponse {
+                    self.weatherInfo = data
+                    viewController.setWeatherInfo(WeatherInfo: data)
+                }
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print(".pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
         }
+        return viewController
     }
     
 }
+
+

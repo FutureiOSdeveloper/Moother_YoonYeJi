@@ -17,13 +17,10 @@ class WeatherInfoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     public func configureUI() {
@@ -45,7 +42,13 @@ class WeatherInfoTableViewCell: UITableViewCell {
             $0.top.equalToSuperview().offset(5)
             $0.leading.equalToSuperview().offset(UIScreen.main.bounds.width/2)
         }
-       
+    }
+    
+    public func setData(title: [String], info: [Any]) {
+        if title.count > 1 {
+            weatherDetailInfoView.setData(title: title[0], info: info[0])
+            weatherDetailInfoView2.setData(title: title[1], info: info[1])
+        }
     }
 
 }

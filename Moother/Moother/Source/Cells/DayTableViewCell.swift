@@ -12,7 +12,6 @@ import Then
 class DayTableViewCell: UITableViewCell {
     
     private var dayLabel = UILabel().then {
-        $0.text = "금요일"
         $0.textColor = .white
         $0.font = UIFont.systemFont(ofSize: 18)
     }
@@ -21,16 +20,13 @@ class DayTableViewCell: UITableViewCell {
         $0.contentMode = .scaleAspectFit
     }
     private var humidityLabel = UILabel().then {
-        $0.text = "70%"
         $0.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         $0.textColor = .lightBlue
     }
     private var maximumTemperatureLabel = UILabel().then {
-        $0.text = "33"
         $0.textColor = .white
     }
     private var minimumTemperatureLabel = UILabel().then {
-        $0.text = "26"
         $0.textColor = .lightGray
     }
     
@@ -74,6 +70,13 @@ class DayTableViewCell: UITableViewCell {
             $0.leading.equalTo(maximumTemperatureLabel.snp.trailing).offset(30)
         }
         
+    }
+    
+    public func setData(dayInfo: AppDay) {
+        dayLabel.text = dayInfo.weekDay
+        humidityLabel.text = "\(dayInfo.humidity)%"
+        maximumTemperatureLabel.text = "\(dayInfo.maxTemp)"
+        minimumTemperatureLabel.text = "\(dayInfo.minTemp)"
     }
     
     public func maskCell(fromTop margin: CGFloat) {

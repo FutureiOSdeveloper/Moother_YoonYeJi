@@ -14,11 +14,9 @@ class HoursHeaderView: UIView {
     private var separatorTopLabel = UIView().then {
         $0.backgroundColor = .white
     }
-
     private var separatorBottomLabel = UIView().then {
         $0.backgroundColor = .white
     }
-    
     private var HoursCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -27,6 +25,10 @@ class HoursHeaderView: UIView {
         $0.contentInset = .zero
         $0.collectionViewLayout = layout
     }
+    
+    // MARK: - Properties
+    
+    private var hourData: [AppHour] = [AppHour(hour: "", temperature: 0)]
     
     // MARK: - View Life Cycle
     
@@ -66,6 +68,11 @@ class HoursHeaderView: UIView {
         HoursCollectionView.register(HoursCollectionViewCell.self, forCellWithReuseIdentifier: Const.Cell.hoursCollectionViewCell)
     }
     
+    public func setHourData(hour: [AppHour]) {
+        hourData = hour
+        HoursCollectionView.reloadData()
+    }
+    
 }
 
 extension HoursHeaderView: UICollectionViewDelegateFlowLayout {
@@ -78,7 +85,7 @@ extension HoursHeaderView: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 12
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -88,7 +95,7 @@ extension HoursHeaderView: UICollectionViewDelegateFlowLayout {
 
 extension HoursHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return hourData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -97,6 +104,7 @@ extension HoursHeaderView: UICollectionViewDataSource {
         }
         
         cell.configureUI()
+        cell.setData(hour: hourData[indexPath.row])
         
         return cell
     }
