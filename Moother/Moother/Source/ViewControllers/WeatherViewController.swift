@@ -320,7 +320,7 @@ extension WeatherViewController {
     func setHourCellInfo(HourInfo: [Current]) {
         for hour in 0...24 {
             let hourly = HourInfo[hour]
-            hourlyList.append(AppHour(hour: hourly.dt.convertToUTCTime().getFormattedHour(), temperature: hourly.temp))
+            hourlyList.append(AppHour(hour: hourly.dt.convertToUTCTime().getFormattedHour(), temperature: hourly.temp, weatherIcon: hourly.weather[0].icon.convertIcon()))
         }
     }
     

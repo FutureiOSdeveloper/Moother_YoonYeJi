@@ -21,6 +21,7 @@ class HoursCollectionViewCell: UICollectionViewCell {
     private var weatherImageView = UIImageView().then {
         $0.image = Const.Image.weatherIcon
         $0.contentMode = .scaleAspectFit
+        $0.tintColor = .white
     }
     private var temperatureLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16)
@@ -63,6 +64,7 @@ class HoursCollectionViewCell: UICollectionViewCell {
     public func setData(hour: AppHour) {
         hourLabel.text = hour.hour
         temperatureLabel.text = "\(Int(hour.temperature))°"
+        weatherImageView.image = UIImage(systemName: hour.weatherIcon)
     }
 
 }
