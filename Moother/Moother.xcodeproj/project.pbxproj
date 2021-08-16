@@ -33,6 +33,7 @@
 		AA5E684B26C6A40D0060CEE5 /* Today.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E684A26C6A40D0060CEE5 /* Today.swift */; };
 		AA5E684E26C6AE700060CEE5 /* Meridiem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E684D26C6AE700060CEE5 /* Meridiem.swift */; };
 		AA5E685126C7F13F0060CEE5 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E685026C7F13F0060CEE5 /* Int+Extension.swift */; };
+		AA5E686026CA49D10060CEE5 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E685F26CA49D10060CEE5 /* String+Extension.swift */; };
 		AA6280C726BFFCC9003506E7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6280C626BFFCC9003506E7 /* UILabel+Extension.swift */; };
 		AA62812726C504CB003506E7 /* LocationModalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62812626C504CB003506E7 /* LocationModalDelegate.swift */; };
 		AA62813526C5168B003506E7 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62813426C5168B003506E7 /* Weather.swift */; };
@@ -86,6 +87,8 @@
 		AA5E684A26C6A40D0060CEE5 /* Today.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Today.swift; sourceTree = "<group>"; };
 		AA5E684D26C6AE700060CEE5 /* Meridiem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meridiem.swift; sourceTree = "<group>"; };
 		AA5E685026C7F13F0060CEE5 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		AA5E685C26C835940060CEE5 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		AA5E685F26CA49D10060CEE5 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		AA6280C626BFFCC9003506E7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		AA62812626C504CB003506E7 /* LocationModalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModalDelegate.swift; sourceTree = "<group>"; };
 		AA62813426C5168B003506E7 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
@@ -98,7 +101,6 @@
 		AA62814E26C5966D003506E7 /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
 		AA62815226C596FE003506E7 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
 		AA62815526C59740003506E7 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
-		AA62817026C5B6A7003506E7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		AA9C0C9926AC6C0500200B6C /* Moother.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moother.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA9C0C9C26AC6C0500200B6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA9C0C9E26AC6C0500200B6C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				AA6280C626BFFCC9003506E7 /* UILabel+Extension.swift */,
 				AA5E683F26C676D90060CEE5 /* Date+Extension.swift */,
 				AA5E685026C7F13F0060CEE5 /* Int+Extension.swift */,
+				AA5E685F26CA49D10060CEE5 /* String+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -275,7 +278,7 @@
 				AA9C0CA726AC6C0D00200B6C /* LaunchScreen.storyboard */,
 				AA9C0CAA26AC6C0D00200B6C /* Info.plist */,
 				AA1BE56126BB5CFF00DCA876 /* Color.xcassets */,
-				AA62817026C5B6A7003506E7 /* Config.xcconfig */,
+				AA5E685C26C835940060CEE5 /* Config.xcconfig */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				AA1BE57B26BC3FB400DCA876 /* LocationTableViewDelegate.swift in Sources */,
 				AA1BE55026BB1FCD00DCA876 /* TodayWeatherTableViewCell.swift in Sources */,
 				AA9C0C9D26AC6C0500200B6C /* AppDelegate.swift in Sources */,
+				AA5E686026CA49D10060CEE5 /* String+Extension.swift in Sources */,
 				AA62813C26C591FE003506E7 /* Current.swift in Sources */,
 				AA9C0CCA26ADB2E000200B6C /* ViewController.swift in Sources */,
 				AA1BE58826BD4E2400DCA876 /* SearchViewController.swift in Sources */,
@@ -489,7 +493,7 @@
 /* Begin XCBuildConfiguration section */
 		AA9C0CAB26AC6C0D00200B6C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA62817026C5B6A7003506E7 /* Config.xcconfig */;
+			baseConfigurationReference = AA5E685C26C835940060CEE5 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

@@ -11,7 +11,7 @@ import Moya
 public class WeatherAPI {
     
     static let shared = WeatherAPI()
-    var weatherProvider = MoyaProvider<WeatherService>(plugins: [MoyaLoggingPlugin()])
+    var weatherProvider = MoyaProvider<WeatherService>()
     
     public init() {}
     

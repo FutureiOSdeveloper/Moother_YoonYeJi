@@ -63,6 +63,8 @@ class WeatherViewController: UIViewController {
     private var today: Today = Today(description: "", currentTemp: 0, maxTemp: 0)
     private var todayDetailTitle: [[String]] = []
     private var todayDetailInfo: [[Any]] = []
+    public var lat: Double = 0
+    public var lon: Double = 0
     
     // MARK: - View Life Cycle
     
@@ -137,9 +139,12 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    public func updateWeatherInfo(city: String) {
+    public func updateWeatherInfo(city: String, lat: Double, lon: Double) {
         addCancelAndAddButton()
         cityLabel.text = city
+        self.lat = lat
+        self.lon = lon
+        getWeatherInfo(lat: lat, lon: lon, exclude: "minutely,alerts")
     }
     
     @objc
@@ -345,4 +350,27 @@ extension WeatherViewController {
         }
     }
 
+}
+
+extension WeatherViewController {
+    
+    func getWeatherInfo(lat: Double, lon: Double, exclude: String) {
+        WeatherAPI.shared.getWeatherData(latitude: lat, longitude: lon, exclude: exclude) { (response) in
+            switch response {
+            case .success(let weatherInfo):
+                if let data = weatherInfo as? WeatherResponse {
+                    self.setWeatherInfo(WeatherInfo: data)
+                }
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print(".pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
+    }
+    
 }
