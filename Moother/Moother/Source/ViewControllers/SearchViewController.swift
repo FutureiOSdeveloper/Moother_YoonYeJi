@@ -144,7 +144,7 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         searchResults = completer.results
-
+        
         searchResultTableView.reloadData()
     }
 }
@@ -172,7 +172,7 @@ extension SearchViewController: UITableViewDelegate {
             let weatherViewController = WeatherViewController()
             weatherViewController.delegate = self
             if let area = placeMark.locality {
-                weatherViewController.updateWeatherInfo(city: area)
+                weatherViewController.updateWeatherInfo(city: area, lat: placeMark.coordinate.latitude, lon: placeMark.coordinate.longitude)
             }
             self.present(weatherViewController, animated: true, completion: nil)
         }
@@ -181,11 +181,11 @@ extension SearchViewController: UITableViewDelegate {
 }
 
 extension SearchViewController: LocationModalDelegate {
-
+    
     func addLocation(_ location: String) {
         print(location)
     }
-
+    
 }
 
 extension SearchViewController: UITableViewDataSource {

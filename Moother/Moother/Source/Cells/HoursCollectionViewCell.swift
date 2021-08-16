@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import Then
 
-
 class HoursCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Properties

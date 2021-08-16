@@ -98,7 +98,7 @@ class WeatherPageViewController: UIViewController {
     private func instantiateViewController(index: Int) -> UIViewController {
         let viewController = WeatherViewController()
         viewController.view.tag = index
-        return getWeatherInfo(lat: 37.56, lon: 126.91, exclude: "minutely,alerts", viewController: viewController)
+        return getWeatherInfo(lat: viewController.lat, lon: viewController.lon, exclude: "minutely,alerts", viewController: viewController)
     }
     
     private func setPageViewController(index: Int) {
