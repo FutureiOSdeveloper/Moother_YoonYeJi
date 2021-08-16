@@ -11,5 +11,6 @@ struct AppHour {
 
     let hour: String
     let temperature: Double
+    let weatherIcon: String
     
 }

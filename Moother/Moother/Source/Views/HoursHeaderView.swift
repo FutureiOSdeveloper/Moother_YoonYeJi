@@ -28,7 +28,7 @@ class HoursHeaderView: UIView {
     
     // MARK: - Properties
     
-    private var hourData: [AppHour] = [AppHour(hour: "", temperature: 0)]
+    private var hourData: [AppHour] = [AppHour(hour: "", temperature: 0, weatherIcon: "")]
     
     // MARK: - View Life Cycle
     
