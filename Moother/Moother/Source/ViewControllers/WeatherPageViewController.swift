@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class WeatherPageViewController: UIViewController {
     
@@ -34,20 +35,28 @@ class WeatherPageViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var locationCount = 5
     private var index = 0
     private var weatherInfo: WeatherResponse?
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private var container: NSPersistentContainer!
+    private var locationList: [AppLocation] = []
+    private var locationWeatherInfoList: [WeatherResponse] = []
+    private let weatherListViewController = WeatherListViewController()
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setPersistentContainer()
+        fetchContent()
+        getAllLocationWeatherInfo()
         setPageViewController(index: index)
         setPageControl()
         setUI()
         setToolbarItem()
         setButtonEvent()
+        addObservers()
     }
     
     // MARK: - Function
@@ -98,7 +107,8 @@ class WeatherPageViewController: UIViewController {
     private func instantiateViewController(index: Int) -> UIViewController {
         let viewController = WeatherViewController()
         viewController.view.tag = index
-        return getWeatherInfo(lat: viewController.lat, lon: viewController.lon, exclude: "minutely,alerts", viewController: viewController)
+        viewController.getWeatherInfo(lat: locationList[index].latitude, lon: locationList[index].longitude, exclude: "minutely,alerts")
+        return viewController
     }
     
     private func setPageViewController(index: Int) {
@@ -113,8 +123,14 @@ class WeatherPageViewController: UIViewController {
         pageViewController.didMove(toParent: self)
     }
     
+    private func getAllLocationWeatherInfo() {
+        locationList.forEach {
+            getWeatherInfo(lat: $0.latitude, lon: $0.longitude, exclude: "minutely,alerts")
+        }
+    }
+    
     private func setPageControl() {
-        pageControl.numberOfPages = locationCount
+        pageControl.numberOfPages = locationList.count
     }
     
     private func changeCurrentPosition(at index: Int) {
@@ -123,7 +139,19 @@ class WeatherPageViewController: UIViewController {
         pageControl.currentPage = index
     }
     
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(addButtonClicked), name: NSNotification.Name("addButtonClicked"), object: nil)
+    }
+    
     // MARK: - @objc
+    
+    @objc
+    private func addButtonClicked() {
+        locationWeatherInfoList.removeAll()
+        fetchContent()
+        setPageControl()
+        getAllLocationWeatherInfo()
+    }
     
     @objc
     private func touchWeatherChannelButton(_ button: UIButton) {
@@ -134,16 +162,38 @@ class WeatherPageViewController: UIViewController {
     
     @objc
     private func touchWeatherListButton(_ button: UIButton) {
-        let weatherListViewController = WeatherListViewController()
         weatherListViewController.modalPresentationStyle = .overCurrentContext
-        
         weatherListViewController.delegate = self
+        weatherListViewController.setLocationInfo(weatherInfo: locationWeatherInfoList, nameInfo: locationList)
         
         self.present(weatherListViewController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Core Data
+    
+    private func setPersistentContainer() {
+        container = appDelegate.persistentContainer
+    }
+    
+    private func fetchContent() {
+        locationList.removeAll()
+        do {
+            let location = try self.container.viewContext.fetch(Location.fetchRequest()) as! [Location]
+            location.forEach {
+                locationList.append(AppLocation(name: $0.name as! String, latitude: $0.latitude as! Double, longitude: $0.longtitude as! Double))
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
 
 extension WeatherPageViewController: LocationTableViewDelegate {
+    func tableViewDeleteButtonDidSelected(_ tableView: UITableView, at index: Int) {
+        fetchContent()
+        setPageControl()
+    }
+    
     func tableViewDidSelected(_ tableView: UITableView, at index: Int) {
         changeCurrentPosition(at: index)
     }
@@ -173,8 +223,8 @@ extension WeatherPageViewController: UIPageViewControllerDataSource {
             return nil
         }
         
-        let nextIndex = index > 0 ? index - 1 : locationCount - 1
-        
+        let nextIndex = index > 0 ? index - 1 : locationList.count - 1
+    
         let nextViewController = instantiateViewController(index: nextIndex)
         return nextViewController
     }
@@ -185,7 +235,7 @@ extension WeatherPageViewController: UIPageViewControllerDataSource {
         guard let index = pageViewController.viewControllers?.first?.view.tag else {
             return nil
         }
-        let nextIndex = (index + 1) % locationCount
+        let nextIndex = (index + 1) % locationList.count
         let nextViewController = instantiateViewController(index: nextIndex)
         return nextViewController
     }
@@ -194,13 +244,16 @@ extension WeatherPageViewController: UIPageViewControllerDataSource {
 
 extension WeatherPageViewController {
     
-    func getWeatherInfo(lat: Double, lon: Double, exclude: String, viewController: WeatherViewController) -> UIViewController {
-        WeatherAPI.shared.getWeatherData(latitude: lat, longitude: lon, exclude: exclude) { (response) in
+    func getWeatherInfo(lat: Double, lon: Double, exclude: String) {
+        WeatherAPI.shared.getWeatherData(latitude: lat, longitude: lon, exclude: exclude) { [self] (response) in
             switch response {
             case .success(let weatherInfo):
                 if let data = weatherInfo as? WeatherResponse {
-                    self.weatherInfo = data
-                    viewController.setWeatherInfo(WeatherInfo: data)
+                    locationWeatherInfoList.append(data)
+                }
+                if locationWeatherInfoList.count == locationList.count { /// 여기 리팩토링 방법 찾아보기
+                    weatherListViewController.setLocationInfo(weatherInfo: locationWeatherInfoList, nameInfo: locationList)
+                    weatherListViewController.reloadTableView()
                 }
             case .requestErr(let message):
                 print("requestErr", message)
@@ -212,7 +265,6 @@ extension WeatherPageViewController {
                 print("networkFail")
             }
         }
-        return viewController
     }
     
 }

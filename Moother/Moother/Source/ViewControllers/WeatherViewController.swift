@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 import Then
+import CoreData
 
 enum Size {
     static let headerHeight: CGFloat = 260
@@ -57,24 +58,25 @@ class WeatherViewController: UIViewController {
     
     // MARK: - Properties
     
-    public var delegate: LocationModalDelegate?
     private var hourlyList: [AppHour] = []
     private var dayList: [AppDay] = []
     private var today: Today = Today(description: "", currentTemp: 0, maxTemp: 0)
     private var todayDetailTitle: [[String]] = []
     private var todayDetailInfo: [[Any]] = []
-    public var lat: Double = 0
-    public var lon: Double = 0
+    private var locationInfo = AppLocation(name: "", latitude: 0, longitude: 0)
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private var container: NSPersistentContainer!
+    private var locationName: String = ""
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         setUI()
         setDelegation()
         registerCell()
+        setPersistentContainer()
     }
     
     // MARK: - Function
@@ -139,25 +141,81 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    public func updateWeatherInfo(city: String, lat: Double, lon: Double) {
+    public func updateWeatherInfo(lat: Double, lon: Double) {
         addCancelAndAddButton()
-        cityLabel.text = city
-        self.lat = lat
-        self.lon = lon
         getWeatherInfo(lat: lat, lon: lon, exclude: "minutely,alerts")
     }
     
+    func setLocationName(lat: Double, lon: Double) {
+        let findLocation = CLLocation(latitude: lat, longitude: lon)
+        let geocoder = CLGeocoder()
+        let locale = Locale(identifier: "Ko-kr")
+        geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale) { [self] (placeMark, error) in
+            if let address = placeMark {
+                if let name = address[0].locality {
+                    locationName = name
+                    self.cityLabel.text = name
+                } else {
+                    if let name = address.last?.name {
+                        locationName = name
+                        self.cityLabel.text = name
+                    }
+                }
+            }
+        }
+    }
+    
+    func setCityLabel(city: String) {
+        cityLabel.text = city
+    }
+    
+    // MARK: - objc
+    
     @objc
     private func touchAddButton(_ button: UIButton) {
-        if let location = cityLabel.text {
-            delegate?.addLocation(location)
-        }
+        insertContent(content: locationInfo)
+        NotificationCenter.default.post(name: NSNotification.Name("addButtonClicked"), object: nil)
         self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     @objc
     private func touchCancelButton(_ button: UIButton) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Core Data
+    
+    private func setPersistentContainer() {
+        container = appDelegate.persistentContainer
+    }
+    
+    private func insertContent(content: AppLocation) {
+        let entity = NSEntityDescription.entity(forEntityName: "Location", in: self.container.viewContext)
+        
+        if let entity = entity {
+            let location = NSManagedObject(entity: entity, insertInto: self.container.viewContext)
+
+            location.setValue(locationName, forKey: "name")
+            location.setValue(content.latitude, forKey: "latitude")
+            location.setValue(content.longitude, forKey: "longtitude")
+
+            do {
+                try self.container.viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func deleteAllLocation() {
+        let fetrequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Location")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetrequest)
+    
+        do {
+            try container.viewContext.execute(batchDeleteRequest)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
 
@@ -303,7 +361,7 @@ extension WeatherViewController: UITableViewDataSource {
 }
 
 extension WeatherViewController {
-
+    
     // MARK: - TableView Data Setting
     
     func setWeatherInfo(WeatherInfo: WeatherResponse) {
@@ -316,7 +374,7 @@ extension WeatherViewController {
     }
     
     func setHeaderInfo(WeatherInfo: WeatherResponse) {
-        cityLabel.text = WeatherInfo.timezone
+        cityLabel.text = locationName
         statusLabel.text = WeatherInfo.current.weather[0].weatherDescription
         temperatureLabel.text = "\(Int(WeatherInfo.current.temp))°"
         minAndMaxTemperatureLabel.text = "최고:\(Int(WeatherInfo.daily[0].temp.max))° 최저:\(Int(WeatherInfo.daily[0].temp.min))°"
@@ -349,17 +407,20 @@ extension WeatherViewController {
             todayDetailInfo.append(infoList[i])
         }
     }
-
+    
 }
 
 extension WeatherViewController {
     
     func getWeatherInfo(lat: Double, lon: Double, exclude: String) {
-        WeatherAPI.shared.getWeatherData(latitude: lat, longitude: lon, exclude: exclude) { (response) in
+        WeatherAPI.shared.getWeatherData(latitude: lat, longitude: lon, exclude: exclude) { [self] (response) in
             switch response {
             case .success(let weatherInfo):
                 if let data = weatherInfo as? WeatherResponse {
-                    self.setWeatherInfo(WeatherInfo: data)
+                    setLocationName(lat: data.lat, lon: data.lon)
+                    setWeatherInfo(WeatherInfo: data)
+                    locationInfo.latitude = data.lat
+                    locationInfo.longitude = data.lon
                 }
             case .requestErr(let message):
                 print("requestErr", message)
