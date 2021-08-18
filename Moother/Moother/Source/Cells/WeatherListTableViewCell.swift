@@ -12,17 +12,14 @@ class WeatherListTableViewCell: UITableViewCell {
     // MARK: - UI Properties
     
     private var timeLabel = UILabel().then {
-        $0.text = "오후 10:32"
         $0.font = UIFont.systemFont(ofSize: 10)
         $0.textColor = .white
     }
     private var locationLabel = UILabel().then {
-        $0.text = "광명시"
         $0.font = UIFont.systemFont(ofSize: 24)
         $0.textColor = .white
     }
     private var temperatureLabel = UILabel().then {
-        $0.text = "27°"
         $0.font = UIFont.systemFont(ofSize: 36, weight: .regular)
         $0.textColor = .white
     }
@@ -70,8 +67,10 @@ class WeatherListTableViewCell: UITableViewCell {
         }
     }
     
-    public func setTemperature(temperature: Int) {
-        temperatureLabel.text = "\(temperature)"
+    public func setData(time: String, city: String, temperature: Int) {
+        timeLabel.text = time
+        locationLabel.text = city
+        temperatureLabel.text = "\(temperature)°"
     }
 
 }

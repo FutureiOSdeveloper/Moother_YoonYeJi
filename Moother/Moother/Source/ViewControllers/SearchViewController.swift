@@ -170,20 +170,9 @@ extension SearchViewController: UITableViewDelegate {
                 return
             }
             let weatherViewController = WeatherViewController()
-            weatherViewController.delegate = self
-            if let area = placeMark.locality {
-                weatherViewController.updateWeatherInfo(city: area, lat: placeMark.coordinate.latitude, lon: placeMark.coordinate.longitude)
-            }
+            weatherViewController.updateWeatherInfo(lat: placeMark.coordinate.latitude, lon: placeMark.coordinate.longitude)
             self.present(weatherViewController, animated: true, completion: nil)
         }
-    }
-    
-}
-
-extension SearchViewController: LocationModalDelegate {
-    
-    func addLocation(_ location: String) {
-        print(location)
     }
     
 }

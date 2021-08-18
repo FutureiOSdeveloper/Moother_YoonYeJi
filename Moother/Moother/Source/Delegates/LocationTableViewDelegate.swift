@@ -9,4 +9,5 @@ import UIKit
 
 protocol LocationTableViewDelegate {
     func tableViewDidSelected(_ tableView: UITableView, at index: Int)
+    func tableViewDeleteButtonDidSelected(_ tableView: UITableView, at index: Int)
 }

@@ -59,7 +59,6 @@
 		AA9C0CBC26ADA38200200B6C /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0CBB26ADA38200200B6C /* URL.swift */; };
 		AA9C0CBF26ADA39600200B6C /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0CBE26ADA39600200B6C /* Const.swift */; };
 		AA9C0CCA26ADB2E000200B6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9C0CC926ADB2E000200B6C /* ViewController.swift */; };
-		AAEB6F1026CC3109001E919E /* AppLocationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEB6F0F26CC3109001E919E /* AppLocationList.swift */; };
 		BF8C586B94D136BABBCEDBDF /* Pods_Moother.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7D988581B2B390B9D25109 /* Pods_Moother.framework */; };
 /* End PBXBuildFile section */
 
@@ -121,7 +120,6 @@
 		AA9C0CBB26ADA38200200B6C /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		AA9C0CBE26ADA39600200B6C /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		AA9C0CC926ADB2E000200B6C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AAEB6F0F26CC3109001E919E /* AppLocationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocationList.swift; sourceTree = "<group>"; };
 		FED130E0E89B808F01D03FB4 /* Pods-Moother.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moother.debug.xcconfig"; path = "Target Support Files/Pods-Moother/Pods-Moother.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -199,7 +197,6 @@
 				AA5E684226C690FC0060CEE5 /* AppDay.swift */,
 				AA5E684A26C6A40D0060CEE5 /* Today.swift */,
 				AA984ABC26CB01FF000B5CBB /* AppLocation.swift */,
-				AAEB6F0F26CC3109001E919E /* AppLocationList.swift */,
 			);
 			path = AppModel;
 			sourceTree = "<group>";
@@ -488,7 +485,6 @@
 				AA62814526C592A7003506E7 /* FeelsLike.swift in Sources */,
 				AA5E685126C7F13F0060CEE5 /* Int+Extension.swift in Sources */,
 				AA5E684726C694280060CEE5 /* AppWeek.swift in Sources */,
-				AAEB6F1026CC3109001E919E /* AppLocationList.swift in Sources */,
 				AA6280C726BFFCC9003506E7 /* UILabel+Extension.swift in Sources */,
 				AA5E684326C690FC0060CEE5 /* AppDay.swift in Sources */,
 				AA62813F26C59219003506E7 /* Rain.swift in Sources */,

@@ -17,8 +17,8 @@ extension Date {
     }
     
     func getFormattedHour() -> String {
-        let hour = getDateComponent(with: "h")
-        let meridiem = Meridiem.init(rawValue: getDateComponent(with: "a"))
+        let hour = self.getDateComponent(with: "h")
+        let meridiem = Meridiem.init(rawValue: self.getDateComponent(with: "a"))
     
         switch meridiem {
         case .am:
@@ -31,8 +31,8 @@ extension Date {
     }
     
     func getFormattedHM() -> String {
-        let meridiem = Meridiem.init(rawValue: getDateComponent(with: "a"))
-        let hm = getDateComponent(with: "h:m")
+        let meridiem = Meridiem.init(rawValue: self.getDateComponent(with: "a"))
+        let hm = self.getDateComponent(with: "h:m")
         
         switch meridiem {
         case .am:
