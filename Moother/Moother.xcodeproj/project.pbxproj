@@ -153,6 +153,13 @@
 			path = Delegates;
 			sourceTree = "<group>";
 		};
+		AA491F2126CD5C6D002EC7F4 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		AA4C3ACF26B1C0A800D47CBA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +273,7 @@
 		AA9C0CB226AC91DE00200B6C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				AA491F2126CD5C6D002EC7F4 /* CoreData */,
 				AA5E684526C694190060CEE5 /* Enum */,
 				AA5E683626C65EB60060CEE5 /* AppModel */,
 				AA62814D26C595E3003506E7 /* APIService */,
