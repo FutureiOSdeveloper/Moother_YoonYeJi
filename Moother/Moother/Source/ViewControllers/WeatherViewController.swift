@@ -121,9 +121,9 @@ class WeatherViewController: UIViewController {
     }
     
     private func registerCell() {
-        weatherTableView.register(DayTableViewCell.self, forCellReuseIdentifier: Const.Cell.dayTableViewCell)
-        weatherTableView.register(TodayWeatherTableViewCell.self, forCellReuseIdentifier: Const.Cell.todayWeatherTableViewCell)
-        weatherTableView.register(WeatherInfoTableViewCell.self, forCellReuseIdentifier: Const.Cell.weatherInfoTableViewCell)
+        weatherTableView.register(DayTableViewCell.self)
+        weatherTableView.register(TodayWeatherTableViewCell.self)
+        weatherTableView.register(WeatherInfoTableViewCell.self)
     }
     
     private func addCancelAndAddButton() {
@@ -328,19 +328,19 @@ extension WeatherViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 1: /// 날짜별 날씨셀
-            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.dayTableViewCell, for: indexPath) as? DayTableViewCell else { return UITableViewCell() }
+            let cell: DayTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configureUI()
             cell.setData(dayInfo: dayList[indexPath.row])
             cell.selectionStyle = .none
             return cell
         case 2: /// 오늘 날씨셀
-            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
+            let cell: TodayWeatherTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configureUI()
             cell.setTodayLabel(todayInfo: today)
             cell.selectionStyle = .none
             return cell
         case 3: /// 날씨 Detail Info 셀
-            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.weatherInfoTableViewCell, for: indexPath) as? WeatherInfoTableViewCell else { return UITableViewCell() }
+            let cell: WeatherInfoTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configureUI()
             if todayDetailInfo.count > 1 {
                 cell.setData(title: todayDetailTitle[indexPath.row], info: todayDetailInfo[indexPath.row])
@@ -348,7 +348,7 @@ extension WeatherViewController: UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         case 4:
-            guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: Const.Cell.todayWeatherTableViewCell, for: indexPath) as? TodayWeatherTableViewCell else { return UITableViewCell() }
+            let cell: TodayWeatherTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configureUI()
             cell.selectionStyle = .none
             cell.setLabel(text: cityLabel.text! + " 날씨.")

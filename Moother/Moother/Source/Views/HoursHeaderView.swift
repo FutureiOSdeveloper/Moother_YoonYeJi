@@ -65,7 +65,7 @@ class HoursHeaderView: UIView {
         
         HoursCollectionView.dataSource = self
         HoursCollectionView.delegate = self
-        HoursCollectionView.register(HoursCollectionViewCell.self, forCellWithReuseIdentifier: Const.Cell.hoursCollectionViewCell)
+        HoursCollectionView.register(HoursCollectionViewCell.self)
     }
     
     public func setHourData(hour: [AppHour]) {
@@ -99,16 +99,11 @@ extension HoursHeaderView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = HoursCollectionView.dequeueReusableCell(withReuseIdentifier: Const.Cell.hoursCollectionViewCell, for: indexPath) as? HoursCollectionViewCell else {
-            return UICollectionViewCell()
-        }
+        let cell: HoursCollectionViewCell = HoursCollectionView.dequeueReusableCell(for: indexPath)
         
         cell.configureUI()
         cell.setData(hour: hourData[indexPath.row])
         
         return cell
     }
-}
-
-extension HoursHeaderView: UICollectionViewDelegate {
 }
